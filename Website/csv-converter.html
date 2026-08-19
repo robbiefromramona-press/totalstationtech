@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Survey Point CSV Converter</title>
+<script>
+/* PapaParse v5.6.0 — vendored inline so this tool works fully offline (no CDN dependency). MIT License. https://github.com/mholt/PapaParse */
+/* @license
+Papa Parse
+v5.6.0
+https://github.com/mholt/PapaParse
+License: MIT
+*/
+((e,t)=>{"function"==typeof define&&define.amd?define([],t):"object"==typeof module&&"undefined"!=typeof exports?module.exports=t():e.Papa=t()})(this,function r(){var n="undefined"!=typeof self?self:"undefined"!=typeof window?window:void 0!==n?n:{};var s=!n.document&&!!n.postMessage,a=n.IS_PAPA_WORKER||!1,o={},h=0,w={};function P(e){return 65279===e.charCodeAt(0)?e.slice(1):e}function u(e){this._handle=null,this._finished=!1,this._completed=!1,this._halted=!1,this._input=null,this._baseIndex=0,this._partialLine="",this._rowCount=0,this._start=0,this._nextChunk=null,this.isFirstChunk=!0,this._completeResults={data:[],errors:[],meta:{}},function(e){var t=b(e);t.chunkSize=parseInt(t.chunkSize),e.step||e.chunk||(t.chunkSize=null);this._handle=new i(t),(this._handle.streamer=this)._config=t}.call(this,e),this.parseChunk=function(t,e){var i=parseInt(this._config.skipFirstNLines)||0;if(this.isFirstChunk&&0<i){let e=this._config.newline;e||(r=this._config.quoteChar||'"',e=this._handle.guessLineEndings(t,r)),t=[...t.split(e).slice(i)].join(e)}this.isFirstChunk&&U(this._config.beforeFirstChunk)&&void 0!==(r=this._config.beforeFirstChunk(t))&&(t=r),this.isFirstChunk=!1,this._halted=!1;var i=this._partialLine+t,r=(this._partialLine="",this._handle.parse(i,this._baseIndex,!this._finished));if(!this._handle.paused()&&!this._handle.aborted()){t=r.meta.cursor,i=(this._finished||(this._partialLine=i.substring(t-this._baseIndex),this._baseIndex=t),r&&r.data&&(this._rowCount+=r.data.length),this._finished||this._config.preview&&this._rowCount>=this._config.preview);if(a)n.postMessage({results:r,workerId:w.WORKER_ID,finished:i});else if(U(this._config.chunk)&&!e){if(this._config.chunk(r,this._handle),this._handle.paused()||this._handle.aborted())return void(this._halted=!0);this._completeResults=r=void 0}return this._config.step||this._config.chunk||(this._completeResults.data=this._completeResults.data.concat(r.data),this._completeResults.errors=this._completeResults.errors.concat(r.errors),this._completeResults.meta=r.meta),this._completed||!i||!U(this._config.complete)||r&&r.meta.aborted||(this._config.complete(this._completeResults,this._input),this._completed=!0),i||r&&r.meta.paused||this._nextChunk(),r}this._halted=!0},this._sendError=function(e){U(this._config.error)?this._config.error(e):a&&this._config.error&&n.postMessage({workerId:w.WORKER_ID,error:e,finished:!1})}}function d(e){var r;(e=e||{}).chunkSize||(e.chunkSize=w.RemoteChunkSize),u.call(this,e),this._nextChunk=s?function(){this._readChunk(),this._chunkLoaded()}:function(){this._readChunk()},this.stream=function(e){this._input=e,this._nextChunk()},this._readChunk=function(){if(this._finished)this._chunkLoaded();else{if(r=new XMLHttpRequest,this._config.withCredentials&&(r.withCredentials=this._config.withCredentials),s||(r.onload=m(this._chunkLoaded,this),r.onerror=m(this._chunkError,this)),r.open(this._config.downloadRequestBody?"POST":"GET",this._input,!s),this._config.downloadRequestHeaders){var e,t=this._config.downloadRequestHeaders;for(e in t)r.setRequestHeader(e,t[e])}var i;this._config.chunkSize&&(i=this._start+this._config.chunkSize-1,r.setRequestHeader("Range","bytes="+this._start+"-"+i));try{r.send(this._config.downloadRequestBody)}catch(e){this._chunkError(e.message)}s&&0===r.status&&this._chunkError()}},this._chunkLoaded=function(){4===r.readyState&&(r.status<200||400<=r.status?this._chunkError():(this._start+=this._config.chunkSize||r.responseText.length,this._finished=!this._config.chunkSize||this._start>=(e=>null!==(e=e.getResponseHeader("Content-Range"))?parseInt(e.substring(e.lastIndexOf("/")+1)):-1)(r),this.parseChunk(r.responseText)))},this._chunkError=function(e){e=r.statusText||e;this._sendError(new Error(e))}}function l(e){(e=e||{}).chunkSize||(e.chunkSize=w.LocalChunkSize),u.call(this,e);var i,r,n="undefined"!=typeof FileReader;this.stream=function(e){this._input=e,r=e.slice||e.webkitSlice||e.mozSlice,n?((i=new FileReader).onload=m(this._chunkLoaded,this),i.onerror=m(this._chunkError,this)):i=new FileReaderSync,this._nextChunk()},this._nextChunk=function(){this._finished||this._config.preview&&!(this._rowCount<this._config.preview)||this._readChunk()},this._readChunk=function(){var e=this._input,t=(this._config.chunkSize&&(t=Math.min(this._start+this._config.chunkSize,this._input.size),e=r.call(e,this._start,t)),i.readAsText(e,this._config.encoding));n||this._chunkLoaded({target:{result:t}})},this._chunkLoaded=function(e){this._start+=this._config.chunkSize,this._finished=!this._config.chunkSize||this._start>=this._input.size,this.parseChunk(e.target.result)},this._chunkError=function(){this._sendError(i.error)}}function f(e){var i;u.call(this,e=e||{}),this.stream=function(e){return i=e,this._nextChunk()},this._nextChunk=function(){var e,t;if(!this._finished)return e=this._config.chunkSize,i=e?(t=i.substring(0,e),i.substring(e)):(t=i,""),this._finished=!i,this.parseChunk(t)}}function c(e){u.call(this,e=e||{});var t=[],i=!0,r=!1;this.pause=function(){u.prototype.pause.apply(this,arguments),this._input.pause()},this.resume=function(){u.prototype.resume.apply(this,arguments),this._input.resume()},this.stream=function(e){this._input=e,this._input.on("data",this._streamData),this._input.on("end",this._streamEnd),this._input.on("error",this._streamError)},this._checkIsFinished=function(){r&&1===t.length&&(this._finished=!0)},this._nextChunk=function(){this._checkIsFinished(),t.length?this.parseChunk(t.shift()):i=!0},this._streamData=m(function(e){try{t.push("string"==typeof e?e:e.toString(this._config.encoding)),i&&(i=!1,this._checkIsFinished(),this.parseChunk(t.shift()))}catch(e){this._streamError(e)}},this),this._streamError=m(function(e){this._streamCleanUp(),this._sendError(e)},this),this._streamEnd=m(function(){this._streamCleanUp(),r=!0,this._streamData("")},this),this._streamCleanUp=m(function(){this._input.removeListener("data",this._streamData),this._input.removeListener("end",this._streamEnd),this._input.removeListener("error",this._streamError)},this)}function i(m){var n,s,a,t,o=Math.pow(2,53),h=-o,u=/^\s*-?(\d+\.?|\.\d+|\d+\.\d+)([eE][-+]?\d+)?\s*$/,d=/^((\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)))$/,i=this,r=0,l=0,f=!1,e=!1,c=[],p={data:[],errors:[],meta:{}};function y(e){return"greedy"===m.skipEmptyLines?""===e.join("").trim():1===e.length&&0===e[0].length}function _(){if(p&&a&&(k("Delimiter","UndetectableDelimiter","Unable to auto-detect delimiting character; defaulted to '"+w.DefaultDelimiter+"'"),a=!1),m.skipEmptyLines&&(p.data=p.data.filter(function(e){return!y(e)})),g()){if(p)if(Array.isArray(p.data[0])){for(var e=0;g()&&e<p.data.length;e++)p.data[e].forEach(t);p.data.splice(0,1)}else p.data.forEach(t);function t(e,t){e=P(e),U(m.transformHeader)&&(e=m.transformHeader(e,t)),c.push(e)}}function i(e,t){for(var i=m.header?{}:[],r=0;r<e.length;r++){var n=r,s=e[r],s=((e,t)=>(e=>(m.dynamicTypingFunction&&void 0===m.dynamicTyping[e]&&(m.dynamicTyping[e]=m.dynamicTypingFunction(e)),!0===(m.dynamicTyping[e]||m.dynamicTyping)))(e)?"true"===t||"TRUE"===t||"false"!==t&&"FALSE"!==t&&((e=>{if(u.test(e)){e=parseFloat(e);if(h<e&&e<o)return 1}})(t)?parseFloat(t):d.test(t)?new Date(t):""===t?null:t):t)(n=m.header?r>=c.length?"__parsed_extra":c[r]:n,s=m.transform?m.transform(s,n):s);"__parsed_extra"===n?(i[n]=i[n]||[],i[n].push(s)):i[n]=s}return m.header&&(r>c.length?k("FieldMismatch","TooManyFields","Too many fields: expected "+c.length+" fields but parsed "+r,l+t):r<c.length&&k("FieldMismatch","TooFewFields","Too few fields: expected "+c.length+" fields but parsed "+r,l+t)),i}var r;p&&(m.header||m.dynamicTyping||m.transform)&&(r=1,!p.data.length||Array.isArray(p.data[0])?(p.data=p.data.map(i),r=p.data.length):p.data=i(p.data,0),m.header&&p.meta&&(p.meta.fields=c),l+=r)}function g(){return m.header&&0===c.length}function k(e,t,i,r){e={type:e,code:t,message:i};void 0!==r&&(e.row=r),p.errors.push(e)}U(m.step)&&(t=m.step,m.step=function(e){p=e,g()?_():(_(),0!==p.data.length&&(r+=e.data.length,m.preview&&r>m.preview?s.abort():(p.data=p.data[0],t(p,i))))}),this.parse=function(e,t,i){var r=m.quoteChar||'"',r=(m.newline||(m.newline=this.guessLineEndings(e,r)),a=!1,m.delimiter?U(m.delimiter)&&(m.delimiter=m.delimiter(e),p.meta.delimiter=m.delimiter):((r=((e,t,i,r,n)=>{var s,a,o,h;n=n||[",","\t","|",";",w.RECORD_SEP,w.UNIT_SEP];for(var u=0;u<n.length;u++){for(var d,l=n[u],f=0,c=0,p=0,_=(o=void 0,new E({comments:r,delimiter:l,newline:t,preview:10}).parse(e)),g=0;g<_.data.length;g++)i&&y(_.data[g])?p++:(d=_.data[g].length,c+=d,void 0===o?o=d:0<d&&(f+=Math.abs(d-o),o=d));0<_.data.length&&(c/=_.data.length-p),1.99<c&&(void 0===a||f<a||f===a&&h<c)&&(a=f,s=l,h=c)}return{successful:!!(m.delimiter=s),bestDelimiter:s}})(e,m.newline,m.skipEmptyLines,m.comments,m.delimitersToGuess)).successful?m.delimiter=r.bestDelimiter:(a=!0,m.delimiter=w.DefaultDelimiter),p.meta.delimiter=m.delimiter),b(m));return m.preview&&m.header&&r.preview++,n=e,s=new E(r),p=s.parse(n,t,i),_(),f?{meta:{paused:!0}}:p||{meta:{paused:!1}}},this.paused=function(){return f},this.pause=function(){f=!0,s.abort(),n=U(m.chunk)?"":n.substring(s.getCharIndex())},this.resume=function(){i.streamer._halted?(f=!1,i.streamer.parseChunk(n,!0)):setTimeout(i.resume,3)},this.aborted=function(){return e},this.abort=function(){e=!0,s.abort(),p.meta.aborted=!0,U(m.complete)&&m.complete(p),n=""},this.guessLineEndings=function(e,t){e=e.substring(0,1048576);var t=new RegExp(q(t)+"([^]*?)"+q(t),"gm"),i=(e=e.replace(t,"")).split("\r"),t=e.split("\n"),e=1<t.length&&t[0].length<i[0].length;if(1===i.length||e)return"\n";for(var r=0,n=0;n<i.length;n++)"\n"===i[n][0]&&r++;return r>=i.length/2?"\r\n":"\r"}}function q(e){return e.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}function E(C){var S=(C=C||{}).delimiter,O=C.newline,x=C.comments,I=C.step,A=C.preview,T=C.fastMode,D=null,L=!1,F=null==C.quoteChar?'"':C.quoteChar,z=F;if(void 0!==C.escapeChar&&(z=C.escapeChar),("string"!=typeof S||-1<w.BAD_DELIMITERS.indexOf(S))&&(S=","),x===S)throw new Error("Comment character same as delimiter");!0===x?x="#":("string"!=typeof x||-1<w.BAD_DELIMITERS.indexOf(x))&&(x=!1),"\n"!==O&&"\r"!==O&&"\r\n"!==O&&(O="\n");var M=0,j=!1;this.parse=function(i,t,r){if("string"!=typeof i)throw new Error("Input must be a string");var n=i.length,e=S.length,s=O.length,a=x.length,o=U(I),h=[],u=[],d=[],l=M=0;if(!i)return v();if(T||!1!==T&&-1===i.indexOf(F)){for(var f=i.split(O),c=0;c<f.length;c++){if(d=f[c],M+=d.length,c!==f.length-1)M+=O.length;else if(r)return v();if(!x||d.substring(0,a)!==x){if(o){if(h=[],k(d.split(S)),R(),j)return v()}else k(d.split(S));if(A&&A<=c)return h=h.slice(0,A),v(!0)}}return v()}for(var p=i.indexOf(S,M),_=i.indexOf(O,M),g=new RegExp(q(z)+q(F),"g"),m=i.indexOf(F,M);;)if(i[M]===F)for(m=M,M++;;){if(-1===(m=i.indexOf(F,m+1)))return r||u.push({type:"Quotes",code:"MissingQuotes",message:"Quoted field unterminated",row:h.length,index:M}),E();if(m===n-1)return E(i.substring(M,m).replace(g,F));if(F===z&&i[m+1]===z)m++;else if(F===z||0===m||i[m-1]!==z){-1!==p&&p<m+1&&(p=i.indexOf(S,m+1));var y=w(-1===(_=-1!==_&&_<m+1?i.indexOf(O,m+1):_)?p:Math.min(p,_));if(i.substr(m+1+y,e)===S){d.push(i.substring(M,m).replace(g,F)),i[M=m+1+y+e]!==F&&(m=i.indexOf(F,M)),p=i.indexOf(S,M),_=i.indexOf(O,M);break}y=w(_);if(i.substring(m+1+y,m+1+y+s)===O){if(d.push(i.substring(M,m).replace(g,F)),b(m+1+y+s),p=i.indexOf(S,M),m=i.indexOf(F,M),o&&(R(),j))return v();if(A&&h.length>=A)return v(!0);break}u.push({type:"Quotes",code:"InvalidQuotes",message:"Trailing quote on quoted field is malformed",row:h.length,index:M}),m++}}else if(x&&0===d.length&&i.substring(M,M+a)===x){if(-1===_)return v();M=_+s,_=i.indexOf(O,M),p=i.indexOf(S,M)}else if(-1!==p&&(p<_||-1===_))d.push(i.substring(M,p)),M=p+e,p=i.indexOf(S,M);else{if(-1===_)break;if(d.push(i.substring(M,_)),b(_+s),o&&(R(),j))return v();if(A&&h.length>=A)return v(!0)}return E();function k(e){h.push(e),l=M}function w(e){var t=0;return t=-1!==e&&(e=i.substring(m+1,e))&&""===e.trim()?e.length:t}function E(e){return r||(void 0===e&&(e=i.substring(M)),d.push(e),M=n,k(d),o&&R()),v()}function b(e){M=e,k(d),d=[],_=i.indexOf(O,M)}function v(e){if(C.header&&!t&&h.length&&!L){var s=h[0],a=Object.create(null),o=new Set(s);let n=!1;for(let r=0;r<s.length;r++){let i=P(s[r]);if(a[i=U(C.transformHeader)?C.transformHeader(i,r):i]){let e,t=a[i];for(;e=i+"_"+t,t++,o.has(e););o.add(e),s[r]=e,a[i]++,n=!0,(D=null===D?{}:D)[e]=i}else a[i]=1,s[r]=i;o.add(i)}n&&console.warn("Duplicate headers found and renamed."),L=!0}return{data:h,errors:u,meta:{delimiter:S,linebreak:O,aborted:j,truncated:!!e,cursor:l+(t||0),renamedHeaders:D}}}function R(){I(v()),h=[],u=[]}},this.abort=function(){j=!0},this.getCharIndex=function(){return M}}function p(e){var t=e.data,i=o[t.workerId],r=!1;if(t.error)i.userError(t.error,t.file);else if(t.results&&t.results.data){var n={abort:function(){r=!0,_(t.workerId,{data:[],errors:[],meta:{aborted:!0}})},pause:g,resume:g};if(U(i.userStep)){for(var s=0;s<t.results.data.length&&(i.userStep({data:t.results.data[s],errors:t.results.errors,meta:t.results.meta},n),!r);s++);delete t.results}else U(i.userChunk)&&(i.userChunk(t.results,n,t.file),delete t.results)}t.finished&&!r&&_(t.workerId,t.results)}function _(e,t){var i=o[e];U(i.userComplete)&&i.userComplete(t),i.terminate(),delete o[e]}function g(){throw new Error("Not implemented.")}function b(e){if("object"!=typeof e||null===e)return e;var t,i=Array.isArray(e)?[]:{};for(t in e)i[t]=b(e[t]);return i}function m(e,t){return function(){e.apply(t,arguments)}}function U(e){return"function"==typeof e}return w.parse=function(e,t){var i=(t=t||{}).dynamicTyping||!1;U(i)&&(t.dynamicTypingFunction=i,i={});if(t.dynamicTyping=i,t.transform=!!U(t.transform)&&t.transform,!t.worker||!w.WORKERS_SUPPORTED)return i=null,w.NODE_STREAM_INPUT,"string"==typeof e?(e=P(e),i=new(t.download?d:f)(t)):!0===e.readable&&U(e.read)&&U(e.on)?i=new c(t):(n.File&&e instanceof File||e instanceof Object)&&(i=new l(t)),i.stream(e);(i=(()=>{var e;return!!w.WORKERS_SUPPORTED&&(e=(()=>{var e=n.URL||n.webkitURL||null,t=r.toString();return w.BLOB_URL||(w.BLOB_URL=e.createObjectURL(new Blob(["var global = (function() { if (typeof self !== 'undefined') { return self; } if (typeof window !== 'undefined') { return window; } if (typeof global !== 'undefined') { return global; } return {}; })(); global.IS_PAPA_WORKER=true; ","(",t,")();"],{type:"text/javascript"})))})(),(e=new n.Worker(e)).onmessage=p,e.id=h++,o[e.id]=e)})()).userStep=t.step,i.userChunk=t.chunk,i.userComplete=t.complete,i.userError=t.error,t.step=U(t.step),t.chunk=U(t.chunk),t.complete=U(t.complete),t.error=U(t.error),delete t.worker,i.postMessage({input:e,config:t,workerId:i.id})},w.unparse=function(e,t){var s=!1,g=!0,m=",",y="\r\n",a='"',o=a+a,i=!1,r=null,h=!1,u=((()=>{if("object"==typeof t){if("string"!=typeof t.delimiter||w.BAD_DELIMITERS.filter(function(e){return-1!==t.delimiter.indexOf(e)}).length||(m=t.delimiter),"boolean"!=typeof t.quotes&&"function"!=typeof t.quotes&&!Array.isArray(t.quotes)||(s=t.quotes),"boolean"!=typeof t.skipEmptyLines&&"string"!=typeof t.skipEmptyLines||(i=t.skipEmptyLines),"string"==typeof t.newline&&(y=t.newline),"string"==typeof t.quoteChar&&(a=t.quoteChar,o=a+a),"boolean"==typeof t.header&&(g=t.header),Array.isArray(t.columns)){if(0===t.columns.length)throw new Error("Option columns is empty");r=t.columns}void 0!==t.escapeChar&&(o=t.escapeChar+a),t.escapeFormulae instanceof RegExp?h=t.escapeFormulae:"boolean"==typeof t.escapeFormulae&&t.escapeFormulae&&(h=/^[=+\-@\t\r].*$/)}})(),new RegExp(q(a),"g"));"string"==typeof e&&(e=JSON.parse(e));if(Array.isArray(e)){if(!e.length||Array.isArray(e[0]))return n(null,e,i);if("object"==typeof e[0])return n(r||Object.keys(e[0]),e,i)}else if("object"==typeof e)return"string"==typeof e.data&&(e.data=JSON.parse(e.data)),Array.isArray(e.data)&&(e.fields||(e.fields=e.meta&&e.meta.fields||r),e.fields||(e.fields=Array.isArray(e.data[0])?e.fields:"object"==typeof e.data[0]?Object.keys(e.data[0]):[]),Array.isArray(e.data[0])||"object"==typeof e.data[0]||(e.data=[e.data])),n(e.fields||[],e.data||[],i);throw new Error("Unable to serialize unrecognized input");function n(e,t,i){var r="",n=("string"==typeof e&&(e=JSON.parse(e)),"string"==typeof t&&(t=JSON.parse(t)),Array.isArray(e)&&0<e.length),s=!Array.isArray(t[0]);if(n&&g){for(var a=0;a<e.length;a++)0<a&&(r+=m),r+=k(e[a],a);0<t.length&&(r+=y)}for(var o=0;o<t.length;o++){var h=(n?e:t[o]).length,u=!1,d=n?0===Object.keys(t[o]).length:0===t[o].length;if(i&&!n&&(u="greedy"===i?""===t[o].join("").trim():1===t[o].length&&0===t[o][0].length),"greedy"===i&&n){for(var l=[],f=0;f<h;f++){var c=s?e[f]:f;l.push(t[o][c])}u=""===l.join("").trim()}if(!u){for(var p=0;p<h;p++){0<p&&!d&&(r+=m);var _=n&&s?e[p]:p;r+=k(t[o][_],p)}o<t.length-1&&(!i||0<h&&!d)&&(r+=y)}}return r}function k(e,t){var i,r,n;return null==e?"":e.constructor===Date?isNaN(e.getTime())?"":e.toISOString():(n=!1,h&&"string"==typeof e&&h.test(e)&&(e="'"+e,n=!0),r=(i=e.toString()).replace(u,o),(n=n||!0===s||"function"==typeof s&&s(e,t)||Array.isArray(s)&&s[t]||((e,t)=>{for(var i=0;i<t.length;i++)if(-1<e.indexOf(t[i]))return!0;return!1})(r,w.BAD_DELIMITERS)||-1<r.indexOf(m)||-1<i.indexOf(a)||" "===r.charAt(0)||" "===r.charAt(r.length-1))?a+r+a:r)}},w.RECORD_SEP=String.fromCharCode(30),w.UNIT_SEP=String.fromCharCode(31),w.BYTE_ORDER_MARK="\ufeff",w.BAD_DELIMITERS=["\r","\n",'"',w.BYTE_ORDER_MARK],w.WORKERS_SUPPORTED=!s&&!!n.Worker,w.NODE_STREAM_INPUT=1,w.LocalChunkSize=10485760,w.RemoteChunkSize=5242880,w.DefaultDelimiter=",",w.Parser=E,w.ParserHandle=i,w.NetworkStreamer=d,w.FileStreamer=l,w.StringStreamer=f,w.ReadableStreamStreamer=c,a&&(n.onmessage=function(e){e=e.data;void 0===w.WORKER_ID&&e&&(w.WORKER_ID=e.workerId);"string"==typeof e.input?n.postMessage({workerId:w.WORKER_ID,results:w.parse(e.input,e.config),finished:!0}):(n.File&&e.input instanceof File||e.input instanceof Object)&&(e=w.parse(e.input,e.config))&&n.postMessage({workerId:w.WORKER_ID,results:e,finished:!0})}),(d.prototype=Object.create(u.prototype)).constructor=d,(l.prototype=Object.create(u.prototype)).constructor=l,(f.prototype=Object.create(f.prototype)).constructor=f,(c.prototype=Object.create(u.prototype)).constructor=c,w});
+</script>
+<style>
+  :root{
+    --bg:#161412; --panel:#ffffff; --panel-2:#f6f4f1; --border:#e2ddd3;
+    --text:#1a1714; --muted:#726b60; --accent:#f97316; --accent-dark:#c2410c;
+    --accent-soft:#fff1e2; --danger:#9a3412; --danger-soft:#fff1e2; --warn:#78350f; --warn-soft:#fef9c3;
+    --ok:#1a1714; --lock:#1a1714; --lock-soft:#eeece7; --radius:12px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:linear-gradient(180deg,#161412 0%,#161412 230px,#f6f4f1 230px,#f6f4f1 100%);color:var(--text);min-height:100vh;}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px;}
+
+  .hero{padding:56px 0 36px;text-align:center;color:#fff;}
+  .hero .eyebrow{text-transform:uppercase;letter-spacing:.08em;font-size:12px;color:#facc15;font-weight:600;margin-bottom:10px;}
+  .hero h1{font-size:30px;margin:0 0 12px;}
+  .hero p{color:#d6d1c9;max-width:600px;margin:0 auto 26px;line-height:1.5;}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:none;border-radius:999px;padding:14px 28px;font-size:15px;font-weight:600;cursor:pointer;transition:transform .12s, box-shadow .12s;}
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:var(--accent);color:#fff;box-shadow:0 8px 24px rgba(249,115,22,.35);}
+  .btn-primary:hover{background:var(--accent-dark);}
+  .btn-secondary{background:#fff;color:var(--text);border:1px solid var(--border);}
+  .btn-secondary:hover{background:var(--panel-2);}
+  .btn-ghost{background:transparent;color:var(--muted);border:1px solid transparent;}
+  .btn-ghost:hover{color:var(--text);}
+  .btn-sm{padding:8px 14px;font-size:12.5px;border-radius:8px;}
+  .btn:disabled{opacity:.45;cursor:not-allowed;}
+
+  #app{display:none;padding:24px 0 80px;}
+  #app.visible{display:block;}
+  .hero.hidden{display:none;}
+
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:0 1px 2px rgba(15,23,42,.04);}
+
+  .steps{display:flex;gap:6px;margin-bottom:22px;flex-wrap:wrap;}
+  .step-dot{flex:1;min-width:90px;text-align:center;font-size:10.5px;font-weight:600;color:var(--muted);padding:8px 4px 10px;border-bottom:3px solid var(--border);}
+  .step-dot.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .step-dot.done{color:var(--ok);border-bottom-color:var(--ok);}
+
+  .step-panel{display:none;}
+  .step-panel.active{display:block;}
+
+  h2.step-title{margin:0 0 4px;font-size:20px;}
+  p.step-sub{margin:0 0 20px;color:var(--muted);font-size:13.5px;line-height:1.5;}
+
+  .dropzone{border:2px dashed var(--border);border-radius:var(--radius);padding:44px 20px;text-align:center;color:var(--muted);cursor:pointer;transition:border-color .15s,background .15s;}
+  .dropzone.drag{border-color:var(--accent);background:var(--accent-soft);}
+  .dropzone strong{color:var(--text);}
+  .dropzone input{display:none;}
+  .file-pill{display:inline-flex;align-items:center;gap:8px;background:var(--accent-soft);color:var(--accent-dark);padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;margin-top:14px;}
+
+  .table-scroll{overflow:auto;border:1px solid var(--border);border-radius:8px;max-height:240px;margin-top:16px;}
+  table{border-collapse:collapse;width:100%;font-size:12.5px;}
+  th,td{padding:7px 11px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;}
+  thead th{background:var(--panel-2);position:sticky;top:0;font-weight:600;}
+  tbody tr:hover{background:var(--panel-2);}
+
+  .choice-group{display:flex;flex-direction:column;gap:10px;}
+  .choice{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--border);border-radius:10px;padding:14px 16px;cursor:pointer;transition:border-color .12s,background .12s;}
+  .choice:hover{border-color:#fdba74;}
+  .choice.selected{border-color:var(--accent);background:var(--accent-soft);}
+  .choice input{margin-top:3px;}
+  .choice .choice-title{font-weight:600;font-size:14px;}
+  .choice .choice-sub{color:var(--muted);font-size:12.5px;margin-top:2px;}
+
+  .brand-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:22px;}
+  .brand-card{border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;cursor:pointer;font-weight:600;font-size:13.5px;transition:border-color .12s,background .12s;}
+  .brand-card:hover{border-color:#fdba74;}
+  .brand-card.selected{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-dark);}
+  .brand-card .sub{display:block;font-weight:400;color:var(--muted);font-size:11px;margin-top:4px;}
+
+  .toggle-row{display:flex;gap:10px;margin-bottom:24px;}
+  .toggle-row .choice{flex:1;}
+
+  select, .num-input, input[type="text"]{border:1px solid var(--border);border-radius:8px;padding:8px 11px;font-size:13px;background:#fff;}
+
+  .map-row{border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:10px;background:var(--panel-2);}
+  .map-row.protected{background:var(--lock-soft);border-color:#d6d1c9;}
+  .map-row-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .map-row .col-name{font-weight:700;font-size:13px;min-width:170px;}
+  .map-row .sample{color:var(--muted);font-size:11.5px;}
+  .map-row select{min-width:190px;}
+  .lock-badge{display:inline-flex;align-items:center;gap:4px;background:#e4e0d8;color:var(--lock);font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:.03em;}
+  .warn-banner{margin-top:10px;background:var(--warn-soft);border:1px solid #fde047;color:var(--warn);border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.5;}
+  .warn-banner .actions{margin-top:8px;display:flex;gap:8px;}
+  .error-banner{background:var(--danger-soft);border:1px solid #fb923c;color:var(--danger);border-radius:8px;padding:10px 14px;font-size:12.5px;margin-bottom:16px;}
+
+  .field-row{border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px;}
+  .field-row-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+  .field-row-title{font-weight:700;font-size:13.5px;}
+  .field-row-title .tag{font-weight:500;color:var(--muted);font-size:11.5px;}
+  .field-row select{margin-top:8px;}
+  .prefix-check{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-top:8px;}
+
+  .footer-nav{display:flex;justify-content:space-between;align-items:center;margin-top:26px;}
+  .footer-nav .right{display:flex;gap:10px;}
+
+  .summary-list{list-style:none;padding:0;margin:0 0 20px;display:flex;flex-direction:column;gap:8px;}
+  .summary-list li{font-size:13px;color:var(--text);background:var(--panel-2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;display:flex;justify-content:space-between;gap:10px;}
+  .summary-list li span.label{color:var(--muted);}
+  .badge{display:inline-block;background:var(--accent-soft);color:var(--accent-dark);font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;}
+  .badge-lock{background:#e4e0d8;color:var(--lock);}
+
+  .privacy-note{text-align:center;color:#948c7f;font-size:12px;margin-top:18px;}
+  .top-actions{display:flex;justify-content:flex-end;margin-bottom:10px;}
+  .hint{font-size:11.5px;color:var(--muted);margin-top:2px;}
+</style>
+</head>
+<body>
+
+  <section class="hero" id="hero">
+    <div class="wrap">
+      <div class="eyebrow">BIM-Press &middot; Total Station Tech</div>
+      <h1>Convert survey point CSVs for the field</h1>
+      <p>Upload a point export from Trimble, Leica, Topcon, Sokkia or anything else, answer a few quick questions about its structure, and download a converted CSV — built for getting the right data onto the FieldLink floor plan.</p>
+      <button class="btn btn-primary" id="launchBtn">🧭 CSV CLEANUP</button>
+    </div>
+  </section>
+
+  <main id="app">
+    <div class="wrap">
+      <div class="top-actions">
+        <button class="btn btn-ghost" id="closeAppBtn">&larr; Back to site</button>
+      </div>
+      <div class="card">
+        <div class="steps" id="stepsNav"></div>
+
+        <!-- Step 0: Upload -->
+        <div class="step-panel active" data-step="0">
+          <h2 class="step-title">1. Upload your point file</h2>
+          <p class="step-sub">Drag a file in, or click to browse. We'll take a quick look at its structure before asking anything.</p>
+          <div class="dropzone" id="dropzone">
+            <div id="dropzoneText"><strong>Click to upload</strong> or drag a .csv file here</div>
+            <input type="file" id="fileInput" accept=".csv,text/csv">
+            <div id="filePill"></div>
+          </div>
+          <div class="table-scroll" id="rawPreviewWrap" style="display:none;">
+            <table id="rawPreviewTable"></table>
+          </div>
+        </div>
+
+        <!-- Step 1: file structure -->
+        <div class="step-panel" data-step="1">
+          <h2 class="step-title">2. Tell us about this file</h2>
+          <p class="step-sub">Two quick questions so we read the columns correctly.</p>
+
+          <p style="font-weight:600;font-size:13.5px;margin:0 0 8px;">Does the first row contain column headers?</p>
+          <div class="toggle-row">
+            <label class="choice selected" data-value="yes">
+              <input type="radio" name="hasHeader" value="yes" checked>
+              <div><div class="choice-title">Yes</div><div class="choice-sub">Row 1 is labels like NAME, X, Y, Z…</div></div>
+            </label>
+            <label class="choice" data-value="no">
+              <input type="radio" name="hasHeader" value="no">
+              <div><div class="choice-title">No</div><div class="choice-sub">Row 1 is already data (raw P,N,E,Z,D export)</div></div>
+            </label>
+          </div>
+
+          <p style="font-weight:600;font-size:13.5px;margin:0 0 8px;">Which system exported this file?</p>
+          <div class="brand-grid" id="brandGrid"></div>
+          <p class="hint" id="brandHint"></p>
+        </div>
+
+        <!-- Step 2: column mapping -->
+        <div class="step-panel" data-step="2">
+          <h2 class="step-title">3. Confirm what each column is</h2>
+          <p class="step-sub"><span class="lock-badge">🔒 locked</span> columns (Point Number, coordinates, Elevation) are left unchanged by default — everything else you can freely remap in the next step.</p>
+          <div id="mapError" class="error-banner" style="display:none;"></div>
+          <div id="columnMapper"></div>
+        </div>
+
+        <!-- Step 3: coordinate order -->
+        <div class="step-panel" data-step="3">
+          <h2 class="step-title">4. Confirm coordinate order</h2>
+          <p class="step-sub">Easting and Northing get swapped between formats all the time — quick check before we lock this in.</p>
+          <div class="choice-group" id="coordOrderChoices"></div>
+        </div>
+
+        <!-- Step 4: field routing -->
+        <div class="step-panel" data-step="4">
+          <h2 class="step-title">5. Route your Description, Layer &amp; attribute fields</h2>
+          <p class="step-sub">FieldLink only shows Point Number, Elevation and Description on the floor plan — anything buried in an attribute column is invisible out there. Move what matters into Description.</p>
+          <div id="fieldRouter"></div>
+        </div>
+
+        <!-- Step 5: review -->
+        <div class="step-panel" data-step="5">
+          <h2 class="step-title">6. Review &amp; download</h2>
+          <p class="step-sub">Here's what we're about to do, and a preview of the converted file.</p>
+          <ul class="summary-list" id="summaryList"></ul>
+          <div class="table-scroll" id="cleanPreviewWrap">
+            <table id="cleanPreviewTable"></table>
+          </div>
+          <div class="footer-nav" style="margin-top:22px;">
+            <button class="btn btn-secondary" id="startOverBtn">Start over</button>
+            <button class="btn btn-primary" id="downloadBtn">⬇ Download converted CSV</button>
+          </div>
+        </div>
+
+        <div class="footer-nav" id="mainNav">
+          <button class="btn btn-secondary" id="backBtn">Back</button>
+          <div class="right"><button class="btn btn-primary" id="nextBtn" disabled>Next</button></div>
+        </div>
+      </div>
+      <p class="privacy-note">Your file is processed entirely in this browser tab. Nothing is uploaded to a server.</p>
+    </div>
+  </main>
+
+<script>
+(function(){
+  "use strict";
+
+  var STEP_NAMES = ["Upload","File info","Mapping","Coord order","Field routing","Review"];
+  var PROTECTED_ROLES = ["pointNumber","coordA","coordB","elevation"];
+  var ROLE_LABELS = {
+    pointNumber: "Point Number", coordA: "Coordinate 1", coordB: "Coordinate 2",
+    elevation: "Elevation (Z)", description: "Description", layer: "Layer",
+    attrName: "Attribute Name", attrValue: "Attribute Value", ignore: "Ignore / Drop"
+  };
+  var BRANDS = [
+    { key:"trimble", label:"Trimble", sub:"Revit export tool" },
+    { key:"leica", label:"Leica", sub:"Captivate / Infinity" },
+    { key:"topcon", label:"Topcon", sub:"MAGNET Field" },
+    { key:"sokkia", label:"Sokkia", sub:"PENZD export" },
+    { key:"other", label:"Other / Not sure", sub:"Manual mapping" }
+  ];
+  // Best-effort positional defaults when there's no header row. Field-software
+  // export order varies even within one brand, so these are starting guesses —
+  // always confirmed/edited on the mapping + coordinate-order steps.
+  var POSITIONAL_PRESETS = {
+    trimble: ["pointNumber","coordA","coordB","elevation","description","layer"],
+    leica:   ["pointNumber","coordA","coordB","elevation","description"],
+    topcon:  ["pointNumber","coordA","coordB","elevation","description"],
+    sokkia:  ["pointNumber","coordA","coordB","elevation","description"],
+    other:   ["pointNumber","coordA","coordB","elevation","description"]
+  };
+  var BRAND_NOTES = {
+    trimble: "We recognize exact headers from your Revit-based export tool (NAME, X( ft ), Y( ft ), Z( ft ), DESC, LAYER, ATTRIBUTE… pairs).",
+    leica: "Leica export headers vary by software/config — we'll guess from common naming (Easting/Northing/Elevation/Code) and you confirm each column.",
+    topcon: "Topcon MAGNET Field exports (e.g. ENZD/PNEZD) vary by config — we'll guess from common naming and you confirm each column.",
+    sokkia: "Sokkia PENZD-style exports vary by config — we'll guess from common naming and you confirm each column.",
+    other: "No preset — we'll take a generic guess at each column and you assign the rest manually."
+  };
+
+  var state = {
+    step: 0,
+    hasHeaderRow: true,
+    brand: "trimble",
+    rawHeaders: [],
+    rawRows: [],
+    columnRoles: {},          // header -> role
+    protectedOriginal: {},    // header -> true if auto-detected as one of the 4 protected roles
+    warnAccepted: {},         // header -> true once user confirms override warning
+    coordOrder: "A_east",     // "A_east" (coordA=Easting) | "A_north" (coordA=Northing)
+    actions: {}               // header -> {action, prefixLabel, pairedNameHeader}
+  };
+
+  // ---------------------- Format detection ----------------------
+  function normHeader(h){ return String(h||"").trim().toUpperCase().replace(/\s+/g," "); }
+
+  function detectTrimbleExact(headers){
+    var norm = headers.map(normHeader);
+    var core = ["NAME","X( FT )","Y( FT )","Z( FT )","DESC","LAYER"];
+    // tolerate spacing variants like X(FT) or X( ft )
+    var coreLoose = norm.slice(0,6).map(function(h){ return h.replace(/\s+/g,""); });
+    var coreExpect = core.map(function(h){ return h.replace(/\s+/g,""); });
+    for (var i=0;i<coreExpect.length;i++){
+      if (coreLoose[i] !== coreExpect[i]) return false;
+    }
+    return true;
+  }
+
+  function aliasRole(header){
+    var h = normHeader(header);
+    if (/^(NAME|POINT|PT|PNO|POINT ID|PID|POINT NUMBER|POINT#|PT#|P)$/.test(h)) return "pointNumber";
+    if (/EAST/.test(h)) return "coordA_east"; // explicit easting
+    if (/NORTH/.test(h)) return "coordA_north"; // explicit northing
+    if (/^X(\(.*\))?$/.test(h)) return "coordA_x";
+    if (/^Y(\(.*\))?$/.test(h)) return "coordA_y";
+    if (/ELEV|^Z(\(.*\))?$|HEIGHT/.test(h)) return "elevation";
+    if (/ATTRIBUTE.*NAME/.test(h)) return "attrName";
+    if (/ATTRIBUTE.*VALUE/.test(h)) return "attrValue";
+    if (/LAYER|CLASS/.test(h)) return "layer";
+    if (/DESC|^CODE$|^D$/.test(h)) return "description";
+    return null;
+  }
+
+  // Detect columns + roles + coordOrder guess from headers (header-row case)
+  function autoDetect(headers, brand){
+    var roles = {};
+    var coordOrderGuess = "A_east";
+    var isTrimbleExact = brand === "trimble" && detectTrimbleExact(headers);
+
+    if (isTrimbleExact){
+      headers.forEach(function(h){
+        var n = normHeader(h).replace(/\s+/g,"");
+        if (n === "NAME") roles[h] = "pointNumber";
+        else if (n === "X(FT)") roles[h] = "coordA";
+        else if (n === "Y(FT)") roles[h] = "coordB";
+        else if (n === "Z(FT)") roles[h] = "elevation";
+        else if (n === "DESC") roles[h] = "description";
+        else if (n === "LAYER") roles[h] = "layer";
+        else if (/^ATTRIBUTE\d+NAME$/.test(n)) roles[h] = "attrName";
+        else if (/^ATTRIBUTE\d+VALUE$/.test(n)) roles[h] = "attrValue";
+        else roles[h] = "ignore";
+      });
+      coordOrderGuess = "A_east"; // X = Easting per Trimble/Point Layout convention
+      return { roles: roles, coordOrder: coordOrderGuess, confident: true };
+    }
+
+    // Generic alias detection (used for Leica/Topcon/Sokkia/Other and as fallback)
+    var explicitEast = null, explicitNorth = null, xCol = null, yCol = null;
+    headers.forEach(function(h){
+      var a = aliasRole(h);
+      if (a === "coordA_east") explicitEast = h;
+      else if (a === "coordA_north") explicitNorth = h;
+      else if (a === "coordA_x") xCol = h;
+      else if (a === "coordA_y") yCol = h;
+      else if (a) roles[h] = a;
+      else roles[h] = "ignore";
+    });
+
+    if (explicitEast && explicitNorth){
+      roles[explicitEast] = "coordA"; roles[explicitNorth] = "coordB";
+      coordOrderGuess = "A_east"; // coordA explicitly labeled Easting
+    } else if (xCol && yCol){
+      roles[xCol] = "coordA"; roles[yCol] = "coordB";
+      coordOrderGuess = "A_east"; // typical X=Easting convention, but ambiguous — user confirms
+    } else if (explicitEast && yCol){
+      roles[explicitEast] = "coordA"; roles[yCol] = "coordB"; coordOrderGuess = "A_east";
+    } else if (explicitNorth && xCol){
+      roles[explicitNorth] = "coordA"; roles[xCol] = "coordB"; coordOrderGuess = "A_north";
+    }
+
+    return { roles: roles, coordOrder: coordOrderGuess, confident: !!((explicitEast&&explicitNorth)||(xCol&&yCol)) };
+  }
+
+  function autoDetectPositional(headers, brand){
+    var order = POSITIONAL_PRESETS[brand] || POSITIONAL_PRESETS.other;
+    var roles = {};
+    headers.forEach(function(h, i){
+      if (i < order.length) roles[h] = order[i];
+      else if ((i - order.length) % 2 === 0) roles[h] = "attrName";
+      else roles[h] = "attrValue";
+    });
+    return { roles: roles, coordOrder: "A_east", confident: false };
+  }
+
+  // ---------------------- Core transform (pure, testable) ----------------------
+  function applyConversion(rawRows, rawHeaders, columnRoles, actions){
+    function headerForRole(role){
+      for (var i=0;i<rawHeaders.length;i++){ if (columnRoles[rawHeaders[i]] === role) return rawHeaders[i]; }
+      return null;
+    }
+    var protectedHeaders = PROTECTED_ROLES.map(headerForRole).filter(Boolean);
+
+    var descContributors = [], layerContributors = [], standalone = [];
+
+    rawHeaders.forEach(function(h){
+      var role = columnRoles[h];
+      if (!role || role === "ignore" || PROTECTED_ROLES.indexOf(role) !== -1) return;
+      var act = (actions[h] || { action: "own" });
+      var entry = { header: h, replace: false, prefix: act.prefixLabel ? act.pairedNameHeader : null };
+
+      if (role === "description" || role === "layer"){
+        if (act.action === "own"){ (role === "description" ? descContributors : layerContributors).push(entry); }
+        else if (act.action === "appendDescription"){ descContributors.push(entry); }
+        else if (act.action === "replaceDescription"){ entry.replace = true; descContributors.push(entry); }
+        else if (act.action === "appendLayer"){ layerContributors.push(entry); }
+        else if (act.action === "replaceLayer"){ entry.replace = true; layerContributors.push(entry); }
+        else if (act.action === "drop"){ /* excluded */ }
+      } else { // attrName, attrValue, or other generic editable
+        if (act.action === "own"){ standalone.push(h); }
+        else if (act.action === "appendDescription"){ descContributors.push(entry); }
+        else if (act.action === "replaceDescription"){ entry.replace = true; descContributors.push(entry); }
+        else if (act.action === "appendLayer"){ layerContributors.push(entry); }
+        else if (act.action === "replaceLayer"){ entry.replace = true; layerContributors.push(entry); }
+        else if (act.action === "drop"){ /* excluded */ }
+      }
+    });
+
+    var descHeaderOut = headerForRole("description") || "Description";
+    var layerHeaderOut = headerForRole("layer") || "Layer";
+    var hasDesc = descContributors.length > 0;
+    var hasLayer = layerContributors.length > 0;
+
+    var outHeaders = protectedHeaders.slice();
+    if (hasDesc) outHeaders.push(descHeaderOut);
+    if (hasLayer) outHeaders.push(layerHeaderOut);
+    standalone.forEach(function(h){ outHeaders.push(h); });
+
+    function cellValue(row, c){
+      var raw = row[c.header];
+      raw = (raw === undefined || raw === null) ? "" : String(raw).trim();
+      if (!raw) return "";
+      if (c.prefix){
+        var label = row[c.prefix];
+        label = (label === undefined || label === null) ? "" : String(label).trim();
+        if (label) return label + ": " + raw;
+      }
+      return raw;
+    }
+    function compose(row, contributors){
+      var replaceVal = null;
+      contributors.forEach(function(c){
+        if (c.replace){ var v = cellValue(row, c); if (v && replaceVal === null) replaceVal = v; }
+      });
+      if (replaceVal !== null) return replaceVal;
+      var parts = [];
+      contributors.forEach(function(c){ if (!c.replace){ var v = cellValue(row, c); if (v) parts.push(v); } });
+      return parts.join(" | ");
+    }
+
+    var outRows = rawRows.map(function(row){
+      var out = {};
+      protectedHeaders.forEach(function(h){
+        var v = row[h]; out[h] = (v === undefined || v === null) ? "" : String(v).trim();
+      });
+      if (hasDesc) out[descHeaderOut] = compose(row, descContributors);
+      if (hasLayer) out[layerHeaderOut] = compose(row, layerContributors);
+      standalone.forEach(function(h){
+        var v = row[h]; out[h] = (v === undefined || v === null) ? "" : String(v).trim();
+      });
+      return out;
+    });
+
+    return { headers: outHeaders, rows: outRows };
+  }
+
+  window.__csvConverterApply = applyConversion;
+  window.__csvConverterAutoDetect = autoDetect;
+
+  // ---------------------- DOM helpers ----------------------
+  function $(sel){ return document.querySelector(sel); }
+  function $all(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel)); }
+  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]; }); }
+
+  var hero = $("#hero"), app = $("#app");
+  var launchBtn = $("#launchBtn"), closeAppBtn = $("#closeAppBtn");
+  var dropzone = $("#dropzone"), fileInput = $("#fileInput"), filePill = $("#filePill");
+  var rawPreviewWrap = $("#rawPreviewWrap"), rawPreviewTable = $("#rawPreviewTable");
+  var stepsNav = $("#stepsNav");
+  var backBtn = $("#backBtn"), nextBtn = $("#nextBtn");
+  var brandGrid = $("#brandGrid"), brandHint = $("#brandHint");
+  var columnMapper = $("#columnMapper"), mapError = $("#mapError");
+  var coordOrderChoices = $("#coordOrderChoices");
+  var fieldRouter = $("#fieldRouter");
+  var summaryList = $("#summaryList"), cleanPreviewTable = $("#cleanPreviewTable");
+  var startOverBtn = $("#startOverBtn"), downloadBtn = $("#downloadBtn");
+
+  launchBtn.addEventListener("click", function(){ hero.classList.add("hidden"); app.classList.add("visible"); window.scrollTo(0,0); });
+  closeAppBtn.addEventListener("click", function(){ resetAll(); app.classList.remove("visible"); hero.classList.remove("hidden"); });
+
+  // ---------------------- Upload ----------------------
+  dropzone.addEventListener("click", function(){ fileInput.click(); });
+  ["dragenter","dragover"].forEach(function(evt){ dropzone.addEventListener(evt, function(e){ e.preventDefault(); dropzone.classList.add("drag"); }); });
+  ["dragleave","drop"].forEach(function(evt){ dropzone.addEventListener(evt, function(e){ e.preventDefault(); dropzone.classList.remove("drag"); }); });
+  dropzone.addEventListener("drop", function(e){ var f = e.dataTransfer.files[0]; if (f) handleFile(f); });
+  fileInput.addEventListener("change", function(e){ var f = e.target.files[0]; if (f) handleFile(f); });
+
+  function handleFile(file){
+    filePill.innerHTML = '<span class="file-pill">📄 ' + escapeHtml(file.name) + '</span>';
+    var useHeader = document.querySelector('input[name="hasHeader"]:checked') ? document.querySelector('input[name="hasHeader"]:checked').value === "yes" : true;
+    parseFile(file, useHeader);
+  }
+
+  function parseFile(file, useHeader){
+    Papa.parse(file, {
+      header: false,
+      skipEmptyLines: true,
+      complete: function(results){
+        var rows = results.data;
+        if (useHeader){
+          state.rawHeaders = (rows[0] || []).map(function(h){ return String(h).trim(); });
+          state.rawRows = rows.slice(1).map(function(r){
+            var o = {}; state.rawHeaders.forEach(function(h,i){ o[h] = r[i] !== undefined ? r[i] : ""; }); return o;
+          });
+        } else {
+          var width = rows.reduce(function(m,r){ return Math.max(m, r.length); }, 0);
+          state.rawHeaders = [];
+          for (var i=0;i<width;i++) state.rawHeaders.push("Column " + (i+1));
+          state.rawRows = rows.map(function(r){
+            var o = {}; state.rawHeaders.forEach(function(h,i){ o[h] = r[i] !== undefined ? r[i] : ""; }); return o;
+          });
+        }
+        state.hasHeaderRow = useHeader;
+        runDetection();
+        renderRawPreview();
+        nextBtn.disabled = state.rawHeaders.length === 0;
+      },
+      error: function(err){ alert("Could not parse that file: " + err.message); }
+    });
+  }
+
+  function renderRawPreview(){
+    rawPreviewWrap.style.display = state.rawRows.length ? "block" : "none";
+    rawPreviewTable.innerHTML = buildTableHTML(state.rawHeaders, state.rawRows.slice(0, 6));
+  }
+  function buildTableHTML(headers, rows){
+    var thead = "<thead><tr>" + headers.map(function(h){ return "<th>" + escapeHtml(h) + "</th>"; }).join("") + "</tr></thead>";
+    var tbody = "<tbody>" + rows.map(function(r){
+      return "<tr>" + headers.map(function(h){ return "<td>" + escapeHtml(r[h] === undefined ? "" : String(r[h])) + "</td>"; }).join("") + "</tr>";
+    }).join("") + "</tbody>";
+    return thead + tbody;
+  }
+
+  // ---------------------- Step 1: brand + header toggle ----------------------
+  function renderBrandGrid(){
+    brandGrid.innerHTML = BRANDS.map(function(b){
+      return '<div class="brand-card' + (state.brand === b.key ? " selected" : "") + '" data-brand="' + b.key + '">' +
+        escapeHtml(b.label) + '<span class="sub">' + escapeHtml(b.sub) + '</span></div>';
+    }).join("");
+    $all(".brand-card").forEach(function(card){
+      card.addEventListener("click", function(){
+        state.brand = card.getAttribute("data-brand");
+        renderBrandGrid();
+        runDetection();
+      });
+    });
+    brandHint.textContent = BRAND_NOTES[state.brand] || "";
+  }
+  renderBrandGrid();
+
+  $all('.toggle-row .choice').forEach(function(choiceEl){
+    choiceEl.addEventListener("click", function(){
+      $all('.toggle-row .choice').forEach(function(c){ c.classList.remove("selected"); });
+      choiceEl.classList.add("selected");
+      var radio = choiceEl.querySelector('input[type="radio"]');
+      if (radio) radio.checked = true;
+      // Re-parse with the new header assumption if a file is already loaded
+      if (fileInput.files && fileInput.files[0]) parseFile(fileInput.files[0], choiceEl.getAttribute("data-value") === "yes");
+    });
+  });
+
+  // ---------------------- Detection orchestration ----------------------
+  function runDetection(){
+    if (!state.rawHeaders.length) return;
+    var result = state.hasHeaderRow ? autoDetect(state.rawHeaders, state.brand) : autoDetectPositional(state.rawHeaders, state.brand);
+    state.columnRoles = result.roles;
+    state.coordOrder = result.coordOrder;
+    state.protectedOriginal = {};
+    state.warnAccepted = {};
+    state.actions = {};
+    state.rawHeaders.forEach(function(h){
+      if (PROTECTED_ROLES.indexOf(state.columnRoles[h]) !== -1) state.protectedOriginal[h] = true;
+      else if (state.columnRoles[h] && state.columnRoles[h] !== "ignore") state.actions[h] = { action: "own", prefixLabel: false, pairedNameHeader: null };
+    });
+  }
+
+  // ---------------------- Step 2: column mapping ----------------------
+  var ROLE_OPTIONS = ["pointNumber","coordA","coordB","elevation","description","layer","attrName","attrValue","ignore"];
+
+  function buildColumnMapper(){
+    columnMapper.innerHTML = "";
+    state.rawHeaders.forEach(function(h){
+      var role = state.columnRoles[h] || "ignore";
+      var isProtectedNow = PROTECTED_ROLES.indexOf(role) !== -1;
+      var wasProtected = !!state.protectedOriginal[h];
+      var sample = state.rawRows[0] ? String(state.rawRows[0][h] || "") : "";
+
+      var row = document.createElement("div");
+      row.className = "map-row" + (isProtectedNow ? " protected" : "");
+      row.setAttribute("data-header", h);
+
+      var optionsHtml = ROLE_OPTIONS.map(function(r){
+        return '<option value="' + r + '"' + (r === role ? " selected" : "") + '>' + ROLE_LABELS[r] + '</option>';
+      }).join("");
+
+      row.innerHTML =
+        '<div class="map-row-top">' +
+          '<span class="col-name">' + escapeHtml(h) + (isProtectedNow ? ' <span class="lock-badge">🔒 locked</span>' : '') + '</span>' +
+          '<select class="role-select">' + optionsHtml + '</select>' +
+          '<span class="sample">e.g. "' + escapeHtml(sample) + '"</span>' +
+        '</div>' +
+        '<div class="warn-slot"></div>';
+
+      columnMapper.appendChild(row);
+
+      var select = row.querySelector(".role-select");
+      var warnSlot = row.querySelector(".warn-slot");
+
+      function renderWarnIfNeeded(){
+        var currentRole = select.value;
+        var stillProtected = PROTECTED_ROLES.indexOf(currentRole) !== -1;
+        if (wasProtected && !stillProtected && !state.warnAccepted[h]){
+          warnSlot.innerHTML =
+            '<div class="warn-banner">⚠️ <strong>' + escapeHtml(h) + '</strong> is typically left unchanged — Point Number, coordinates and Elevation columns are protected because tools like FieldLink key off them directly. Remapping this column may break compatibility.' +
+            '<div class="actions">' +
+              '<button type="button" class="btn btn-secondary btn-sm keep-protected-btn">Keep protected</button>' +
+              '<button type="button" class="btn btn-primary btn-sm override-btn">Yes, remap anyway</button>' +
+            '</div></div>';
+          warnSlot.querySelector(".keep-protected-btn").addEventListener("click", function(){
+            select.value = state.columnRoles[h]; // revert to last accepted role
+            renderWarnIfNeeded();
+            validateMapping();
+          });
+          warnSlot.querySelector(".override-btn").addEventListener("click", function(){
+            state.warnAccepted[h] = true;
+            state.columnRoles[h] = currentRole;
+            if (currentRole !== "ignore") state.actions[h] = state.actions[h] || { action: "own", prefixLabel: false, pairedNameHeader: null };
+            warnSlot.innerHTML = "";
+            row.classList.remove("protected");
+            row.querySelector(".col-name").innerHTML = escapeHtml(h);
+            validateMapping();
+          });
+        } else {
+          warnSlot.innerHTML = "";
+        }
+      }
+      renderWarnIfNeeded();
+
+      select.addEventListener("change", function(){
+        var newRole = select.value;
+        var stillProtected = PROTECTED_ROLES.indexOf(newRole) !== -1;
+        if (wasProtected && !stillProtected && !state.warnAccepted[h]){
+          renderWarnIfNeeded();
+          return; // don't commit yet — wait for explicit confirm
+        }
+        state.columnRoles[h] = newRole;
+        if (newRole !== "ignore" && PROTECTED_ROLES.indexOf(newRole) === -1){
+          state.actions[h] = state.actions[h] || { action: "own", prefixLabel: false, pairedNameHeader: null };
+        } else {
+          delete state.actions[h];
+        }
+        buildColumnMapper(); // rebuild to refresh lock styling + badges
+        validateMapping();
+      });
+    });
+    validateMapping();
+  }
+
+  function validateMapping(){
+    var counts = {};
+    PROTECTED_ROLES.forEach(function(r){ counts[r] = 0; });
+    state.rawHeaders.forEach(function(h){ if (PROTECTED_ROLES.indexOf(state.columnRoles[h]) !== -1) counts[state.columnRoles[h]]++; });
+    var problems = [];
+    PROTECTED_ROLES.forEach(function(r){
+      if (counts[r] === 0) problems.push("No column assigned to " + ROLE_LABELS[r] + ".");
+      if (counts[r] > 1) problems.push("More than one column assigned to " + ROLE_LABELS[r] + " — pick one.");
+    });
+    var hasPendingWarning = state.rawHeaders.some(function(h){
+      return state.protectedOriginal[h] && PROTECTED_ROLES.indexOf(state.columnRoles[h]) === -1 && !state.warnAccepted[h];
+    });
+    if (problems.length){
+      mapError.style.display = "block";
+      mapError.textContent = problems.join(" ");
+      nextBtn.disabled = state.step === 2;
+    } else {
+      mapError.style.display = "none";
+      if (state.step === 2) nextBtn.disabled = hasPendingWarning;
+    }
+    return problems.length === 0;
+  }
+
+  // ---------------------- Step 3: coordinate order ----------------------
+  function headerForRole(role){
+    for (var i=0;i<state.rawHeaders.length;i++){ if (state.columnRoles[state.rawHeaders[i]] === role) return state.rawHeaders[i]; }
+    return null;
+  }
+  function buildCoordOrderStep(){
+    var hA = headerForRole("coordA"), hB = headerForRole("coordB");
+    var sampleA = (state.rawRows[0] && hA) ? state.rawRows[0][hA] : "";
+    var sampleB = (state.rawRows[0] && hB) ? state.rawRows[0][hB] : "";
+    coordOrderChoices.innerHTML =
+      '<label class="choice' + (state.coordOrder === "A_east" ? " selected" : "") + '" data-value="A_east">' +
+        '<input type="radio" name="coordOrder" value="A_east"' + (state.coordOrder === "A_east" ? " checked" : "") + '>' +
+        '<div><div class="choice-title">"' + escapeHtml(hA||"Coordinate 1") + '" is Easting (X), "' + escapeHtml(hB||"Coordinate 2") + '" is Northing (Y)</div>' +
+        '<div class="choice-sub">Sample: ' + escapeHtml(hA||"") + ' = ' + escapeHtml(String(sampleA)) + ', ' + escapeHtml(hB||"") + ' = ' + escapeHtml(String(sampleB)) + '</div></div>' +
+      '</label>' +
+      '<label class="choice' + (state.coordOrder === "A_north" ? " selected" : "") + '" data-value="A_north">' +
+        '<input type="radio" name="coordOrder" value="A_north"' + (state.coordOrder === "A_north" ? " checked" : "") + '>' +
+        '<div><div class="choice-title">"' + escapeHtml(hA||"Coordinate 1") + '" is Northing (Y), "' + escapeHtml(hB||"Coordinate 2") + '" is Easting (X)</div>' +
+        '<div class="choice-sub">Common on N,E,Z-ordered exports</div></div>' +
+      '</label>';
+    $all('#coordOrderChoices .choice').forEach(function(choiceEl){
+      choiceEl.addEventListener("click", function(){
+        $all('#coordOrderChoices .choice').forEach(function(c){ c.classList.remove("selected"); });
+        choiceEl.classList.add("selected");
+        var radio = choiceEl.querySelector('input[type="radio"]');
+        if (radio) radio.checked = true;
+        state.coordOrder = choiceEl.getAttribute("data-value");
+      });
+    });
+  }
+
+  // ---------------------- Step 4: field routing ----------------------
+  function computeAttrPairs(){
+    var names = state.rawHeaders.filter(function(h){ return state.columnRoles[h] === "attrName"; });
+    var values = state.rawHeaders.filter(function(h){ return state.columnRoles[h] === "attrValue"; });
+    var pairs = [];
+    var n = Math.max(names.length, values.length);
+    for (var i=0;i<n;i++){ pairs.push({ nameHeader: names[i] || null, valueHeader: values[i] || null }); }
+    return pairs;
+  }
+
+  var ACTION_OPTIONS = [
+    { v: "own", label: "Keep as its own column" },
+    { v: "appendDescription", label: "Add into Description" },
+    { v: "replaceDescription", label: "Replace Description with this" },
+    { v: "appendLayer", label: "Add into Layer" },
+    { v: "replaceLayer", label: "Replace Layer with this" },
+    { v: "drop", label: "Drop this column" }
+  ];
+
+  function buildFieldRouter(){
+    fieldRouter.innerHTML = "";
+    var pairs = computeAttrPairs();
+
+    // link paired attrValue -> attrName for label-prefix option
+    pairs.forEach(function(p){
+      if (p.valueHeader && p.nameHeader){
+        state.actions[p.valueHeader] = state.actions[p.valueHeader] || { action: "own", prefixLabel: false, pairedNameHeader: null };
+        state.actions[p.valueHeader].pairedNameHeader = p.nameHeader;
+      }
+    });
+
+    var editableHeaders = state.rawHeaders.filter(function(h){
+      var role = state.columnRoles[h];
+      return role && role !== "ignore" && PROTECTED_ROLES.indexOf(role) === -1;
+    });
+
+    if (!editableHeaders.length){
+      fieldRouter.innerHTML = '<p class="hint">No editable columns to route — everything is either protected or ignored.</p>';
+      return;
+    }
+
+    editableHeaders.forEach(function(h){
+      var role = state.columnRoles[h];
+      var act = state.actions[h] || { action: "own", prefixLabel: false, pairedNameHeader: null };
+      state.actions[h] = act;
+      var pairedLabel = act.pairedNameHeader;
+
+      var row = document.createElement("div");
+      row.className = "field-row";
+      row.setAttribute("data-header", h);
+
+      var optHtml = ACTION_OPTIONS.map(function(o){
+        return '<option value="' + o.v + '"' + (o.v === act.action ? " selected" : "") + '>' + o.label + '</option>';
+      }).join("");
+
+      row.innerHTML =
+        '<div class="field-row-head">' +
+          '<span class="field-row-title">' + escapeHtml(h) + ' <span class="tag">(' + ROLE_LABELS[role] + ')</span></span>' +
+        '</div>' +
+        '<select class="action-select">' + optHtml + '</select>' +
+        (pairedLabel ? '<label class="prefix-check"><input type="checkbox" class="prefix-check-input"' + (act.prefixLabel ? " checked" : "") + '> Prefix with its label from "' + escapeHtml(pairedLabel) + '" (e.g. "Room: 101")</label>' : "");
+
+      fieldRouter.appendChild(row);
+
+      row.querySelector(".action-select").addEventListener("change", function(e){
+        state.actions[h].action = e.target.value;
+      });
+      var prefixInput = row.querySelector(".prefix-check-input");
+      if (prefixInput){
+        prefixInput.addEventListener("change", function(e){ state.actions[h].prefixLabel = e.target.checked; });
+      }
+    });
+  }
+
+  // ---------------------- Navigation ----------------------
+  function renderStepsNav(){
+    stepsNav.innerHTML = STEP_NAMES.map(function(name, i){
+      var cls = "step-dot" + (i === state.step ? " active" : (i < state.step ? " done" : ""));
+      return '<div class="' + cls + '">' + (i+1) + ". " + name + "</div>";
+    }).join("");
+  }
+
+  function goToStep(n){
+    state.step = n;
+    $all(".step-panel").forEach(function(p){ p.classList.toggle("active", parseInt(p.getAttribute("data-step"),10) === n); });
+    renderStepsNav();
+    backBtn.style.visibility = n === 0 ? "hidden" : "visible";
+    document.getElementById("mainNav").style.display = n === STEP_NAMES.length - 1 ? "none" : "flex";
+
+    if (n === 0) nextBtn.disabled = state.rawHeaders.length === 0;
+    if (n === 1) nextBtn.disabled = false;
+    if (n === 2){ buildColumnMapper(); }
+    if (n === 3){ buildCoordOrderStep(); nextBtn.disabled = false; }
+    if (n === 4){ buildFieldRouter(); nextBtn.disabled = false; }
+    if (n === 5){ renderReview(); }
+  }
+
+  nextBtn.addEventListener("click", function(){ if (state.step < STEP_NAMES.length - 1) goToStep(state.step + 1); });
+  backBtn.addEventListener("click", function(){ if (state.step > 0) goToStep(state.step - 1); });
+
+  var lastResult = null;
+  function renderReview(){
+    lastResult = applyConversion(state.rawRows, state.rawHeaders, state.columnRoles, state.actions);
+
+    var hA = headerForRole("coordA"), hB = headerForRole("coordB");
+    var eastLabel = state.coordOrder === "A_east" ? hA : hB;
+    var northLabel = state.coordOrder === "A_east" ? hB : hA;
+
+    var items = [];
+    items.push(rowItem("Format", BRANDS.filter(function(b){return b.key===state.brand;})[0].label + (state.hasHeaderRow ? "" : " (no header row)")));
+    items.push(rowItem("Point Number column", headerForRole("pointNumber") || "—", true));
+    items.push(rowItem("Easting", eastLabel || "—", true));
+    items.push(rowItem("Northing", northLabel || "—", true));
+    items.push(rowItem("Elevation", headerForRole("elevation") || "—", true));
+    items.push(rowItem("Output columns", lastResult.headers.length + " total"));
+    items.push(rowItem("Output rows", lastResult.rows.length));
+    summaryList.innerHTML = items.join("");
+
+    cleanPreviewTable.innerHTML = buildTableHTML(lastResult.headers, lastResult.rows.slice(0, 8));
+  }
+  function rowItem(label, value, locked){
+    return '<li><span class="label">' + escapeHtml(label) + '</span><span><span class="badge' + (locked?" badge-lock":"") + '">' + escapeHtml(String(value)) + '</span></span></li>';
+  }
+
+  downloadBtn.addEventListener("click", function(){
+    if (!lastResult) return;
+    var csv = Papa.unparse({ fields: lastResult.headers, data: lastResult.rows.map(function(r){ return lastResult.headers.map(function(h){ return r[h]; }); }) });
+    var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = "converted.csv";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  });
+
+  startOverBtn.addEventListener("click", function(){ resetAll(); });
+
+  function resetAll(){
+    state = { step:0, hasHeaderRow:true, brand:"trimble", rawHeaders:[], rawRows:[], columnRoles:{}, protectedOriginal:{}, warnAccepted:{}, coordOrder:"A_east", actions:{} };
+    fileInput.value = "";
+    filePill.innerHTML = "";
+    rawPreviewWrap.style.display = "none";
+    renderBrandGrid();
+    goToStep(0);
+  }
+
+  renderStepsNav();
+  goToStep(0);
+})();
+</script>
+</body>
+</html>
