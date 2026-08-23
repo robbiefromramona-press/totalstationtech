@@ -6,645 +6,496 @@
 <title>TotalStationTech | Total Station Tech For Total Station Techs</title>
 <meta name="description" content="Field tools, gear, and coaching for surveyors, MEPs, contractors, and total station technicians. Built by field guys, for field guys.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-<!-- MailerLite Universal -->
-<script>
-    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
-    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
-    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
-    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
-    ml('account', '2581732');
-</script>
-<!-- End MailerLite Universal -->
-
-<!--
-  IMAGE-FREE VERSION: header icon, masthead banner, and footer badge
-  are now built with pure CSS/SVG instead of tst-icon-circle.png,
-  tst-banner-d2.png, and tst-logo-hex.png (those files were lost).
-  Only remaining external asset: videos/totalstationtech_hero.mp4,
-  which must sit in a "videos" folder next to this HTML file.
-
-  Palette matches your brand sheet: #FFD100 yellow / #0D0D0D black /
-  #4D4D4D gray / #FFFFFF white. Fonts: Bebas Neue (headlines) +
-  Rajdhani (body/nav).
-
-  LEGAL NOTE: The Coaching & Consulting section includes an explicit
-  disclaimer that this is field construction layout coaching, NOT land
-  surveying services. Do not remove/soften that disclaimer.
-
-  EMAIL FORM: MailerLite embedded form (data-form="ZtTYYb").
--->
-
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0D0D0D;
-    --bg-alt:#161616;
-    --yellow:#FFD100;
-    --yellow-dim:#e0b800;
-    --white:#FFFFFF;
-    --gray:#b5b5b5;
-    --brand-gray:#4D4D4D;
-    --border:#2a2a2a;
+    --black:#0c0c0d;
+    --charcoal:#18181a;
+    --charcoal-2:#212124;
+    --yellow:#f5c518;
+    --yellow-dim:#c9a012;
+    --white:#f4f4f0;
+    --gray:#9c9c94;
+    --gray-dim:#6b6b66;
+    --radius:10px;
+    --stripe: repeating-linear-gradient(
+      -45deg,
+      var(--yellow) 0px, var(--yellow) 18px,
+      var(--black) 18px, var(--black) 36px
+    );
   }
-  *{box-sizing:border-box;margin:0;padding:0;}
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
   body{
-    background:var(--bg);
+    margin:0;
+    background:var(--black);
     color:var(--white);
-    font-family:'Rajdhani',Arial,sans-serif;
-    font-weight:500;
-    line-height:1.5;
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.55;
   }
-  h1,h2,h3{font-family:'Bebas Neue',Arial,sans-serif;font-weight:400;letter-spacing:1px;text-transform:uppercase;}
-  a{color:inherit;text-decoration:none;}
-  .yellow{color:var(--yellow);}
-  .container{max-width:1200px;margin:0 auto;padding:0 32px;}
+  h1,h2,h3,.brand-mark,.eyebrow,nav a,.btn{
+    font-family:'Oswald',system-ui,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+  }
+  a{color:inherit;}
+  img,video{max-width:100%;display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+  .hazard-bar{height:8px;background:var(--stripe);}
 
-  .hazard-bar{
-    height:14px;
-    background:repeating-linear-gradient(135deg, var(--yellow) 0 14px, #0a0a0a 14px 28px);
+  /* Skip link / accessibility */
+  .skip-link{
+    position:absolute;left:-999px;top:0;background:var(--yellow);color:var(--black);
+    padding:10px 16px;z-index:999;font-weight:700;
+  }
+  .skip-link:focus{left:16px;top:16px;}
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline:3px solid var(--yellow); outline-offset:2px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important; scroll-behavior:auto !important;}
   }
 
-  /* HEADER */
+  /* ===== Header ===== */
   header{
     position:sticky;top:0;z-index:50;
-    background:rgba(10,10,10,0.96);
-    border-bottom:1px solid var(--border);
+    background:rgba(12,12,13,0.92);
     backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--charcoal-2);
   }
-  .header-inner{
+  .nav-inner{
     display:flex;align-items:center;justify-content:space-between;
-    padding:16px 32px;max-width:1200px;margin:0 auto;flex-wrap:wrap;gap:12px;
+    padding:14px 24px;max-width:1180px;margin:0 auto;
   }
-  .logo-mark{display:flex;align-items:center;gap:10px;}
-  /* CSS hexagon icon replacing tst-icon-circle.png */
-  .hex-icon{
-    width:44px;height:44px;flex-shrink:0;
-    background:var(--bg);
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .badge{
+    width:42px;height:42px;
+    background:var(--yellow);
     clip-path:polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%);
-    border:2px solid var(--yellow);
     display:flex;align-items:center;justify-content:center;
+    font-weight:700;color:var(--black);font-size:13px;
+    font-family:'Oswald',sans-serif;
+    flex-shrink:0;
   }
-  .hex-icon span{
-    font-family:'Bebas Neue',Arial,sans-serif;
-    color:var(--yellow);font-size:13px;letter-spacing:0.5px;
+  .brand-mark{font-size:18px;font-weight:600;letter-spacing:0.08em;color:var(--white);}
+  .brand-mark span{color:var(--yellow);}
+  nav ul{list-style:none;display:flex;gap:26px;margin:0;padding:0;}
+  nav a{font-size:13px;font-weight:600;text-decoration:none;color:var(--gray);}
+  nav a:hover{color:var(--yellow);}
+  .nav-cta{
+    background:var(--yellow);color:var(--black);padding:10px 18px;border-radius:6px;
+    font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;
   }
-  .logo-block .logo{
-    font-family:'Bebas Neue',Arial,sans-serif;font-size:24px;letter-spacing:1.5px;
-  }
-  .logo-block .logo span{color:var(--yellow);}
-  .logo-block .tagline{
-    font-size:10px;letter-spacing:1.5px;color:var(--yellow);
-    margin-top:2px;text-transform:uppercase;font-weight:600;
-  }
-  nav{display:flex;gap:26px;flex-wrap:wrap;}
-  nav a{
-    font-family:'Bebas Neue',Arial,sans-serif;
-    font-size:15px;letter-spacing:1px;text-transform:uppercase;
-    color:var(--gray);padding-bottom:4px;border-bottom:2px solid transparent;
-    transition:color .2s, border-color .2s;
-  }
-  nav a:hover, nav a.active{color:var(--white);border-color:var(--yellow);}
-  nav a.active{color:var(--yellow);}
-  .header-cta{
-    background:var(--yellow);color:#0a0a0a;padding:10px 18px;border-radius:4px;
-    font-family:'Bebas Neue',Arial,sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;
+  .nav-toggle{display:none;}
+  @media (max-width:860px){
+    nav ul{display:none;}
+    .nav-toggle{display:block;background:none;border:1px solid var(--charcoal-2);color:var(--white);
+      padding:8px 12px;border-radius:6px;font-family:'Oswald';}
   }
 
-  /* MASTHEAD -- CSS bar replacing tst-banner-d2.png */
-  .masthead{
-    width:100%;border-bottom:1px solid var(--border);
-    background:linear-gradient(90deg, #0a0a0a, #1a1500, #0a0a0a);
-    padding:10px 0;text-align:center;
-    overflow:hidden;white-space:nowrap;
+  /* ===== Hero ===== */
+  .hero{position:relative;overflow:hidden;min-height:560px;display:flex;align-items:center;}
+  .hero video{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    opacity:0.35;z-index:0;
   }
-  .masthead span{
-    font-family:'Bebas Neue',Arial,sans-serif;
-    font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--yellow);
-  }
-  .masthead span::before, .masthead span::after{
-    content:"—";color:var(--brand-gray);margin:0 12px;
-  }
-
-  /* HERO */
-  .hero{
-    position:relative;padding:70px 0 60px;overflow:hidden;
-    background:
-      radial-gradient(ellipse at 85% 15%, rgba(255,196,0,0.14), transparent 55%),
-      linear-gradient(180deg, #0a0a0a 0%, #141400 60%, #0a0a0a 100%);
-  }
-  .hero::before{
+  .hero::after{
     content:"";position:absolute;inset:0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-    background-size:40px 40px;
-    mask-image:linear-gradient(180deg, black, transparent 80%);
-    pointer-events:none;
+    background:linear-gradient(180deg, rgba(12,12,13,0.6) 0%, rgba(12,12,13,0.92) 100%);
+    z-index:1;
   }
-  .hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr 0.95fr;gap:48px;align-items:center;}
-  .hero-eyebrow{
-    display:inline-block;background:var(--yellow);color:#0a0a0a;
-    font-family:'Bebas Neue',Arial,sans-serif;
-    font-size:13px;letter-spacing:1.5px;text-transform:uppercase;
-    padding:7px 14px;border-radius:3px;margin-bottom:18px;
+  .hero-inner{position:relative;z-index:2;padding:100px 0 70px;}
+  .eyebrow{
+    color:var(--yellow);font-size:12px;font-weight:600;letter-spacing:0.18em;
+    display:flex;align-items:center;gap:10px;margin-bottom:18px;
   }
-  .hero h1{font-size:44px;line-height:1.08;margin-bottom:18px;}
-  .hero p.lead{color:var(--gray);font-size:16px;max-width:460px;margin-bottom:26px;}
-  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:32px;}
+  .eyebrow::before{content:"";width:28px;height:2px;background:var(--yellow);display:inline-block;}
+  .hero h1{
+    font-size:clamp(2.2rem, 5vw, 3.6rem);
+    font-weight:700;line-height:1.08;margin:0 0 20px;color:var(--white);
+    max-width:760px;
+  }
+  .hero h1 em{font-style:normal;color:var(--yellow);}
+  .hero p.lead{color:var(--gray);font-size:1.05rem;max-width:560px;margin:0 0 30px;}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px;}
   .btn{
-    font-family:'Bebas Neue',Arial,sans-serif;
-    padding:14px 26px;border-radius:5px;font-size:16px;
-    letter-spacing:1px;text-transform:uppercase;display:inline-block;
-    cursor:pointer;border:2px solid transparent;transition:all .2s;
+    display:inline-block;padding:13px 26px;border-radius:6px;font-size:13px;font-weight:700;
+    text-decoration:none;cursor:pointer;border:none;
   }
-  .btn-primary{background:var(--yellow);color:#0a0a0a;}
-  .btn-primary:hover{background:var(--yellow-dim);}
-  .btn-outline{border-color:var(--yellow);color:var(--yellow);}
-  .btn-outline:hover{background:rgba(255,196,0,0.1);}
-
-  .audience-strip{display:flex;flex-wrap:wrap;gap:10px;}
-  .audience-strip span{
-    font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;
-    color:var(--gray);border:1px solid var(--border);padding:6px 12px;border-radius:20px;
+  .btn-primary{background:var(--yellow);color:var(--black);}
+  .btn-primary:hover{background:var(--white);}
+  .btn-outline{background:transparent;color:var(--white);border:1px solid var(--gray-dim);}
+  .btn-outline:hover{border-color:var(--yellow);color:var(--yellow);}
+  .audience-tags{display:flex;flex-wrap:wrap;gap:10px;}
+  .audience-tags span{
+    font-size:11px;color:var(--gray);border:1px solid var(--charcoal-2);
+    padding:6px 12px;border-radius:20px;letter-spacing:0.03em;
   }
 
-  /* HERO VIDEO -- portrait badge reveal, contained not stretched */
-  .hero-video-wrap{
-    position:relative;
-    max-width:320px;
-    margin-left:auto;
-    border-radius:14px;
-    overflow:hidden;
-    border:1px solid var(--border);
-    box-shadow:0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(255,209,0,0.08);
-    background:#000;
-  }
-  .hero-video-wrap video{
-    width:100%;
-    height:auto;
-    display:block;
-  }
+  /* ===== Sections ===== */
+  section{padding:80px 0;}
+  .section-head{margin-bottom:44px;max-width:640px;}
+  .section-head .eyebrow{margin-bottom:10px;}
+  .section-head h2{font-size:clamp(1.6rem,3vw,2.2rem);margin:0 0 12px;color:var(--white);font-weight:600;}
+  .section-head p{color:var(--gray);margin:0;font-size:0.98rem;}
+  .alt-bg{background:var(--charcoal);}
 
-  /* SECTIONS */
-  section{padding:64px 0;}
-  .section-alt{background:var(--bg-alt);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-  .section-head{text-align:center;margin-bottom:40px;}
-  .section-head h2{font-size:24px;margin-bottom:10px;}
-  .section-head p{color:var(--gray);font-size:14px;max-width:520px;margin:0 auto;}
-
-  .grid{display:grid;gap:18px;}
-  .grid-3{grid-template-columns:repeat(3,1fr);}
+  /* Tool cards */
+  .grid{display:grid;gap:20px;}
   .grid-4{grid-template-columns:repeat(4,1fr);}
+  .grid-3{grid-template-columns:repeat(3,1fr);}
+  @media (max-width:960px){.grid-4{grid-template-columns:repeat(2,1fr);} .grid-3{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:620px){.grid-4,.grid-3{grid-template-columns:1fr;}}
 
   .card{
-    border:1px solid var(--border);border-radius:10px;padding:26px 20px;
-    background:#0c0c0c;transition:border-color .2s, transform .2s;
+    background:var(--charcoal);border:1px solid var(--charcoal-2);border-radius:var(--radius);
+    padding:24px;display:flex;flex-direction:column;gap:14px;
   }
-  .card:hover{border-color:var(--yellow);transform:translateY(-4px);}
-  .card .icon{width:38px;height:38px;color:var(--yellow);margin-bottom:14px;}
-  .card h3{font-size:14px;letter-spacing:0.5px;margin-bottom:10px;}
-  .card p{font-size:12.5px;color:var(--gray);margin-bottom:16px;}
+  .alt-bg .card{background:var(--black);}
   .card .tag{
-    display:inline-block;font-family:'Bebas Neue',Arial,sans-serif;font-size:12px;letter-spacing:1px;
-    text-transform:uppercase;color:var(--yellow);border:1px solid var(--yellow);
-    padding:5px 12px;border-radius:20px;
+    align-self:flex-start;font-size:10px;font-weight:700;letter-spacing:0.08em;
+    padding:4px 10px;border-radius:20px;
+  }
+  .tag-live{background:rgba(245,197,24,0.15);color:var(--yellow);border:1px solid var(--yellow-dim);}
+  .tag-soon{background:rgba(255,255,255,0.06);color:var(--gray);border:1px solid var(--charcoal-2);}
+  .card h3{margin:0;font-size:1.05rem;color:var(--white);font-weight:600;text-transform:none;letter-spacing:0;}
+  .card p{margin:0;color:var(--gray);font-size:0.9rem;flex-grow:1;}
+  .card .btn{align-self:flex-start;margin-top:4px;}
+
+  /* Coaching list */
+  .coach-wrap{display:grid;grid-template-columns:1.1fr 0.9fr;gap:50px;align-items:start;}
+  @media (max-width:860px){.coach-wrap{grid-template-columns:1fr;}}
+  .coach-list{list-style:none;margin:0 0 28px;padding:0;display:flex;flex-direction:column;gap:12px;}
+  .coach-list li{
+    display:flex;gap:12px;color:var(--white);font-size:0.95rem;padding-bottom:12px;
+    border-bottom:1px solid var(--charcoal-2);
+  }
+  .coach-list li::before{content:"▸";color:var(--yellow);flex-shrink:0;}
+
+  /* Legal box */
+  .legal{
+    background:var(--charcoal);border:1px solid var(--yellow-dim);border-radius:var(--radius);
+    padding:26px 28px;
+  }
+  .legal h3{margin:0 0 12px;font-size:1rem;color:var(--yellow);text-transform:none;letter-spacing:0;}
+  .legal p{color:var(--gray);font-size:0.9rem;margin:0 0 10px;}
+  .legal strong{color:var(--white);}
+
+  /* Who it's for */
+  .who-list{display:flex;flex-wrap:wrap;gap:12px;list-style:none;padding:0;margin:0;}
+  .who-list li{
+    background:var(--charcoal);border:1px solid var(--charcoal-2);border-radius:8px;
+    padding:12px 18px;font-size:0.9rem;color:var(--white);
   }
 
-  .shop-card{position:relative;overflow:hidden;}
-  .shop-card .cat-icon{
-    width:100%;height:110px;border-radius:6px;margin-bottom:16px;
-    background:linear-gradient(135deg, #1a1a1a, #0a0a0a);
-    display:flex;align-items:center;justify-content:center;
+  /* Signup form */
+  .signup-panel{
+    background:var(--charcoal);border:1px solid var(--yellow-dim);border-radius:var(--radius);
+    padding:36px;max-width:620px;margin:0 auto;
   }
-  .shop-card .cat-icon svg{width:44px;height:44px;color:var(--yellow);}
+  .signup-panel h3{margin:0 0 8px;font-size:1.3rem;color:var(--white);text-transform:none;letter-spacing:0;}
+  .signup-panel .sub{color:var(--gray);font-size:0.9rem;margin:0 0 24px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:11px;font-weight:700;letter-spacing:0.06em;
+    text-transform:uppercase;color:var(--gray);margin-bottom:6px;font-family:'Oswald',sans-serif;}
+  .field input, .field textarea{
+    width:100%;padding:12px 14px;border-radius:6px;border:1px solid var(--charcoal-2);
+    background:var(--black);color:var(--white);font-family:'Inter',sans-serif;font-size:0.92rem;
+  }
+  .field textarea{min-height:70px;resize:vertical;}
+  .field input:focus, .field textarea:focus{border-color:var(--yellow);}
+  .signup-panel .btn{width:100%;text-align:center;margin-top:6px;}
+  .form-note{font-size:11px;color:var(--gray-dim);margin-top:14px;text-align:center;}
 
-  .coaching-section{padding:64px 0;}
-  .coaching-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start;}
-  .coaching-grid h2{font-size:24px;margin-bottom:14px;}
-  .coaching-grid p{color:var(--gray);font-size:14px;margin-bottom:14px;}
-  .coaching-list{list-style:none;margin-bottom:20px;}
-  .coaching-list li{font-size:13.5px;color:var(--gray);padding:5px 0;display:flex;gap:10px;}
-  .coaching-list li::before{content:"→";color:var(--yellow);font-weight:800;}
-  .disclaimer-box{
-    border:2px solid var(--yellow);border-radius:8px;padding:22px;
-    background:repeating-linear-gradient(135deg, rgba(255,196,0,0.05) 0 14px, transparent 14px 28px);
+  /* Footer */
+  footer{background:var(--charcoal);border-top:1px solid var(--charcoal-2);padding:50px 0 30px;}
+  .foot-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;margin-bottom:34px;}
+  .foot-brand{display:flex;align-items:center;gap:12px;}
+  .foot-mission{color:var(--gray);font-size:0.88rem;max-width:340px;margin:14px 0 0;}
+  .foot-links{display:flex;flex-direction:column;gap:10px;}
+  .foot-links a{font-size:0.85rem;color:var(--gray);text-decoration:none;}
+  .foot-links a:hover{color:var(--yellow);}
+  .foot-links .headline{font-size:11px;letter-spacing:0.08em;color:var(--white);margin-bottom:4px;font-family:'Oswald';}
+  .foot-bottom{
+    border-top:1px solid var(--charcoal-2);padding-top:22px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    font-size:0.78rem;color:var(--gray-dim);
   }
-  .disclaimer-box .d-title{
-    display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;
-    letter-spacing:1px;text-transform:uppercase;color:var(--yellow);margin-bottom:12px;
-  }
-  .disclaimer-box p{font-size:13px;color:var(--white);margin-bottom:10px;line-height:1.6;}
-  .disclaimer-box p:last-child{margin-bottom:0;color:var(--gray);font-size:12px;}
-  .disclaimer-box strong{color:var(--yellow);}
-
-  .split-section{display:grid;grid-template-columns:1fr 1.2fr;border-top:1px solid var(--border);}
-  .people-panel{
-    padding:60px 40px;
-    background:linear-gradient(180deg, rgba(10,10,10,0.5), rgba(10,10,10,0.85)), linear-gradient(135deg,#1a1a1a,#0a0a0a);
-  }
-  .people-panel h2{font-size:22px;margin-bottom:18px;}
-  .people-panel ul{list-style:none;}
-  .people-panel li{font-size:14px;color:var(--gray);padding:6px 0;display:flex;align-items:center;gap:10px;}
-  .people-panel li::before{content:"✓";color:var(--yellow);font-weight:800;}
-
-  .coming-soon{padding:60px 40px;background:#0e0e0e;}
-  .coming-soon h2{font-size:26px;color:var(--yellow);margin-bottom:6px;}
-  .coming-soon h3{font-size:16px;margin-bottom:16px;}
-  .coming-soon p{font-size:14px;color:var(--gray);max-width:460px;margin-bottom:26px;}
-  .form-note{font-size:11px;color:#666;margin:16px 0 24px;}
-  .follow{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray);display:flex;align-items:center;gap:14px;}
-  .follow .socials{display:flex;gap:12px;}
-  .follow .socials a{
-    width:30px;height:30px;border:1px solid var(--border);border-radius:6px;
-    display:flex;align-items:center;justify-content:center;color:var(--yellow);
-    transition:border-color .2s;
-  }
-  .follow .socials a:hover{border-color:var(--yellow);}
-
-  /* FOOTER -- CSS hexagon badge replacing tst-logo-hex.png */
-  footer{border-top:1px solid var(--border);padding:50px 0 0;}
-  .footer-inner{display:grid;grid-template-columns:auto 1fr auto;gap:40px;align-items:center;padding-bottom:40px;}
-  .badge-hex{
-    width:110px;height:110px;flex-shrink:0;
-    background:var(--bg);
-    clip-path:polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%);
-    border:3px solid var(--yellow);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    filter:drop-shadow(0 0 18px rgba(255,209,0,0.2));
-  }
-  .badge-hex .tst{
-    font-family:'Bebas Neue',Arial,sans-serif;color:var(--yellow);
-    font-size:26px;letter-spacing:1px;line-height:1;
-  }
-  .badge-hex .sub{
-    font-size:7px;letter-spacing:1px;color:var(--white);margin-top:4px;text-align:center;
-  }
-  .mission h3{color:var(--yellow);font-size:13px;letter-spacing:1px;margin-bottom:10px;}
-  .mission p{font-size:13.5px;color:var(--gray);max-width:480px;}
-  .footer-brand{text-align:right;}
-  .footer-brand .name{font-family:'Bebas Neue',Arial,sans-serif;color:var(--yellow);font-size:26px;letter-spacing:1px;}
-  .footer-brand .tag{font-size:11px;color:var(--gray);margin:6px 0 10px;}
-  .footer-brand .copy{font-size:10px;color:#555;}
-
-  .footer-actions{
-    display:flex;justify-content:center;gap:14px;flex-wrap:wrap;
-    padding:0 0 34px;border-top:1px solid var(--border);margin-top:0;padding-top:28px;
-  }
-  .footer-actions .btn{font-size:13px;padding:11px 22px;}
-  .btn-ghost{border:2px solid var(--border);color:var(--gray);background:transparent;}
-  .btn-ghost:hover{border-color:var(--yellow);color:var(--yellow);}
-
-  @media (max-width:900px){
-    .hero-inner{grid-template-columns:1fr;}
-    .hero-video-wrap{margin:0 auto;}
-    .grid-3, .grid-4{grid-template-columns:repeat(2,1fr);}
-    .coaching-grid{grid-template-columns:1fr;}
-    .split-section{grid-template-columns:1fr;}
-    .footer-inner{grid-template-columns:1fr;text-align:center;}
-    .footer-brand{text-align:center;}
-    .badge-hex{margin:0 auto;}
-  }
-  @media (max-width:520px){
-    .hero h1{font-size:32px;}
-    .grid-3, .grid-4{grid-template-columns:1fr;}
-    nav{gap:14px;}
-  }
+  .foot-bottom a{color:var(--gray-dim);text-decoration:underline;}
+  .foot-bottom a:hover{color:var(--yellow);}
 </style>
 </head>
 <body>
-
+<a href="#main" class="skip-link">Skip to content</a>
 <div class="hazard-bar"></div>
 
 <header>
-  <div class="header-inner">
-    <div style="display:flex;align-items:center;gap:12px;">
-      <div class="logo-mark"><div class="hex-icon"><span>TST</span></div></div>
-      <div class="logo-block">
-        <div class="logo">TOTAL<span>STATION</span>TECH</div>
-        <div class="tagline">Total Station Tech For Total Station Techs</div>
-      </div>
-    </div>
-    <nav>
-      <a href="#home" class="active">Home</a>
-      <a href="#tools">Tools</a>
-      <a href="calculator.html">Calculator</a>
-      <a href="#shop">Shop</a>
-      <a href="#learn">Learn</a>
-      <a href="#coaching">Coaching</a>
-      <a href="#contact">Contact</a>
+  <div class="nav-inner">
+    <a href="#home" class="brand">
+      <span class="badge">TST</span>
+      <span class="brand-mark">TOTAL<span>STATION</span>TECH</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#tools">Tools</a></li>
+        <li><a href="https://tst-calc.netlify.app" target="_blank" rel="noopener">Calculator</a></li>
+        <li><a href="#shop">Shop</a></li>
+        <li><a href="#learn">Learn</a></li>
+        <li><a href="#coaching">Coaching</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
     </nav>
-    <a href="#contact" class="header-cta">Join The List</a>
+    <a href="#contact" class="nav-cta">Join The List</a>
   </div>
 </header>
 
-<div class="masthead">
-  <span>FIELD LAYOUT · MEP · TECHNOLOGY</span>
-</div>
+<main id="main">
 
-<section class="hero" id="home">
-  <div class="container hero-inner">
-    <div>
-      <div class="hero-eyebrow">Built By Field Guys</div>
-      <h1>Total Station Tech.<br>For Total Station <span class="yellow">Techs.</span></h1>
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="home">
+    <video autoplay muted loop playsinline poster="">
+      <source src="videos/totalstationtech_hero.mp4" type="video/mp4">
+    </video>
+    <div class="hero-inner wrap">
+      <div class="eyebrow">Field Layout · MEP · Technology</div>
+      <h1>Total Station Tech.<br>For <em>Total Station</em> Techs.</h1>
       <p class="lead">Tools, gear, and know-how for the people actually running the instrument — surveyors, MEPs, contractors, and every hardcore field guy in between.</p>
-
       <div class="hero-ctas">
         <a href="#shop" class="btn btn-primary">Shop Gear</a>
         <a href="#tools" class="btn btn-outline">Try Free Tools</a>
       </div>
-
-      <div class="audience-strip" id="who">
-        <span>Surveyors</span>
-        <span>MEP Contractors</span>
-        <span>Electricians</span>
-        <span>Layout Techs</span>
-        <span>GCs</span>
+      <div class="audience-tags">
+        <span>Surveyors</span><span>MEP</span><span>Contractors</span>
+        <span>Electricians</span><span>Layout Techs</span><span>GCs</span>
         <span>Anyone Running A Gun</span>
       </div>
     </div>
+  </section>
 
-    <div class="hero-video-wrap">
-      <video autoplay muted loop playsinline>
-        <source src="videos/totalstationtech_hero.mp4" type="video/mp4">
-      </video>
-    </div>
-  </div>
-</section>
+  <!-- ===== FIELD TOOLS ===== -->
+  <section id="tools">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Field Tools · No Fluff</div>
+        <h2>Tools you can use right now, free.</h2>
+        <p>Built for the way total station techs actually work — not for BIM departments.</p>
+      </div>
+      <div class="grid grid-4">
 
-<section class="section-alt" id="tools">
-  <div class="container">
-    <div class="section-head">
-      <h2>Field <span class="yellow">Tools.</span> No Fluff.</h2>
-      <p>Free online tools built for the way total station techs actually work — not for BIM departments.</p>
-    </div>
-    <div class="grid grid-4">
-      <div class="card">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
-        <h3>Feet-Inches Field Calculator</h3>
-        <p>Convert ft/in ⇄ decimal on the fly, flip international vs. US survey feet, and run quick field math — right in your browser.</p>
-        <a href="calculator.html" class="tag">Try Now →</a>
-      </div>
-      <div class="card">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
-        <h3>CSV Converter</h3>
-        <p>Clean up messy point files. Fix formats, strip junk, get a field-ready CSV out in seconds.</p>
-        <span class="tag">Coming Soon</span>
-      </div>
-      <div class="card">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><rect x="8" y="12" width="8" height="6" rx="1"/></svg>
-        <h3>PDF to CSV</h3>
-        <p>Upload a plan or point schedule PDF, get a clean CSV of coordinates ready to load into your data collector.</p>
-        <span class="tag">Coming Soon</span>
-      </div>
-      <div class="card">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="2.5"/></svg>
-        <h3>PDF Point Layout</h3>
-        <p>Turn PDF construction plans into staked-out layout points — no manual digitizing required.</p>
-        <span class="tag">Coming Soon</span>
-      </div>
-    </div>
-  </div>
-</section>
+        <div class="card">
+          <span class="tag tag-live">Live</span>
+          <h3>Feet-Inches Field Calculator</h3>
+          <p>Convert ft/in ⇄ decimal on the fly, flip international vs. US survey feet, and run quick field math — right in your browser.</p>
+          <a href="https://tst-calc.netlify.app" target="_blank" rel="noopener" class="btn btn-primary">Try Now →</a>
+        </div>
 
-<section id="shop">
-  <div class="container">
-    <div class="section-head">
-      <h2>The <span class="yellow">Shop.</span></h2>
-      <p>Prisms, poles, safety gear, and accessories picked by guys who use this stuff on real jobs every day.</p>
-    </div>
-    <div class="grid grid-4">
-      <div class="card shop-card">
-        <div class="cat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l7 12H5z"/><circle cx="12" cy="17" r="3"/></svg></div>
-        <h3>Prisms & Prism Poles</h3>
-        <p>Single & triple prisms, fixed-height and telescoping poles built for daily field abuse.</p>
-        <span class="tag">Shop Now</span>
-      </div>
-      <div class="card shop-card">
-        <div class="cat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="3" width="6" height="18" rx="2"/><circle cx="12" cy="8" r="1.5"/><path d="M6 14h12M6 18h12"/></svg></div>
-        <h3>Pole Accessories</h3>
-        <p>Bipods, tribrachs, carry bags, tip replacements — the small stuff that keeps you working.</p>
-        <span class="tag">Shop Now</span>
-      </div>
-      <div class="card shop-card">
-        <div class="cat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 18v-2a8 8 0 0 1 16 0v2"/><path d="M2 18h20"/><path d="M6 10a1 1 0 0 1 2 0M16 10a1 1 0 0 1 2 0"/></svg></div>
-        <h3>Safety Gear</h3>
-        <p>Hard hats, hi-vis vests, and gloves rated for real jobsites, not just OSHA checkboxes.</p>
-        <span class="tag">Shop Now</span>
-      </div>
-      <div class="card shop-card">
-        <div class="cat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="3"/></svg></div>
-        <h3>Custom Accessories</h3>
-        <p>3D-printed mounts, holders, and field-tested add-ons designed by us, for us.</p>
-        <span class="tag">Shop Now</span>
+        <div class="card">
+          <span class="tag tag-live">Live</span>
+          <h3>CSV Converter</h3>
+          <p>Upload a Trimble, Leica, Topcon or Sokkia point export, answer a few quick questions, and download a converted CSV ready for the field.</p>
+          <a href="https://press-csv-converter.netlify.app" target="_blank" rel="noopener" class="btn btn-primary">Try Now →</a>
+        </div>
+
+        <div class="card">
+          <span class="tag tag-live">Live</span>
+          <h3>CoordX — PDF to Field Points</h3>
+          <p>Upload a blueprint PDF, calibrate the scale, place your points, and export a Trimble-ready CSV — no manual digitizing.</p>
+          <a href="https://coordx-press.netlify.app/" target="_blank" rel="noopener" class="btn btn-primary">Try Now →</a>
+        </div>
+
+        <div class="card">
+          <span class="tag tag-live">Live</span>
+          <h3>QR Point</h3>
+          <p>Scan a QR code on a jobsite point and instantly pull up its coordinates, description, and layer data.</p>
+          <a href="https://qr-point.netlify.app/" target="_blank" rel="noopener" class="btn btn-primary">Try Now →</a>
+        </div>
+
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="section-alt" id="learn">
-  <div class="container">
-    <div class="section-head">
-      <h2>Learn From The <span class="yellow">Field.</span></h2>
-      <p>Video tutorials on total station setup, layout workflow, point codes, and troubleshooting — shot on real jobsites.</p>
-    </div>
-    <div class="grid grid-3">
-      <div class="card">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/></svg>
-        <h3>Setup & Calibration</h3>
-        <p>Getting your instrument dialed in fast, every time, on any site.</p>
-        <span class="tag">Watch</span>
+  <!-- ===== SHOP ===== -->
+  <section id="shop" class="alt-bg">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">The Shop</div>
+        <h2>Gear picked by guys who use it daily.</h2>
+        <p>Prisms, poles, safety gear, and accessories — coming online in phases.</p>
       </div>
-      <div class="card">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/></svg>
-        <h3>Layout Workflow</h3>
-        <p>Point codes, staking, and keeping your data collector organized under pressure.</p>
-        <span class="tag">Watch</span>
-      </div>
-      <div class="card">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/></svg>
-        <h3>Troubleshooting</h3>
-        <p>What to do when the instrument, the data, or the day goes sideways.</p>
-        <span class="tag">Watch</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="coaching-section" id="coaching">
-  <div class="container coaching-grid">
-    <div>
-      <h2>Coaching & <span class="yellow">Consulting.</span></h2>
-      <p>One-on-one and crew-level coaching on field construction layout — workflow, equipment setup, point management, and getting faster without cutting corners.</p>
-      <ul class="coaching-list">
-        <li>Total station & data collector workflow coaching</li>
-        <li>Layout crew training for contractors and MEPs</li>
-        <li>Equipment setup & troubleshooting consulting</li>
-        <li>Point code systems & field data organization</li>
-      </ul>
-      <a href="#contact" class="btn btn-primary">Get On The List</a>
-    </div>
-
-    <div class="disclaimer-box">
-      <div class="d-title">⚠ Important — Please Read</div>
-      <p><strong>TotalStationTech provides field construction layout coaching and consulting only.</strong> This is not land surveying, and TotalStationTech is not a licensed land surveying firm.</p>
-      <p>Construction layout — placing points from an approved plan for building purposes — does not require a survey license in most jurisdictions. Boundary surveys, legal descriptions, and land surveying services must be performed by a <strong>licensed land surveyor</strong> in your state.</p>
-      <p>If your project requires boundary determination, ALTA surveys, or any service requiring a licensed surveyor, please engage a licensed land surveying firm directly. Nothing on this site should be interpreted as land surveying services or advice.</p>
-    </div>
-  </div>
-</section>
-
-<section class="split-section">
-  <div class="people-panel">
-    <h2>Who This Is<br><span class="yellow">Built For.</span></h2>
-    <ul>
-      <li>Licensed Surveyors & Survey Crews</li>
-      <li>MEP Contractors</li>
-      <li>Electricians</li>
-      <li>Layout Technicians</li>
-      <li>General Contractors</li>
-      <li>Field Engineers</li>
-      <li>Anyone Running A Total Station</li>
-      <li>Hardcore Field Guys</li>
-    </ul>
-  </div>
-
-  <div class="coming-soon" id="contact">
-    <h2>Coming Soon</h2>
-    <h3>Gear Up. Level Up.</h3>
-    <p>Tools, shop, and coaching are launching in phases. Get on the list and we'll let you know the second each one goes live.</p>
-
-    <style type="text/css">@import url("https://assets.mlcdn.com/fonts.css?version=1786699");</style>
-    <style type="text/css">
-      .ml-form-embedSubmitLoad {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-      }
-      .ml-form-embedSubmitLoad:after {
-        content: " ";
-        display: block;
-        width: 11px;
-        height: 11px;
-        margin: 1px;
-        border-radius: 50%;
-        border: 4px solid #fff;
-        border-color: #ffffff #ffffff #ffffff transparent;
-        animation: ml-form-embedSubmitLoad 1.2s linear infinite;
-      }
-      @keyframes ml-form-embedSubmitLoad {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-      #mlb2-44935832.ml-form-embedContainer { box-sizing: border-box; display: table; margin: 0 auto; position: static; width: 100% !important; max-width:420px; }
-      #mlb2-44935832 .ml-form-embedWrapper { background-color: #161616; border-radius: 6px; box-sizing: border-box; display: inline-block !important; width:100%; padding:20px; }
-      #mlb2-44935832 .ml-form-align-center { text-align: center; }
-      #mlb2-44935832 .ml-form-embedContent h4 { color: #FFD100; font-family: 'Bebas Neue', Arial, sans-serif; font-size: 22px; font-weight: 400; letter-spacing:1px; margin: 0 0 8px 0; text-align: left; }
-      #mlb2-44935832 .ml-form-embedContent p { color: #b5b5b5; font-family: 'Rajdhani', Arial, sans-serif; font-size: 13px; margin: 0 0 14px 0; text-align: left; }
-      #mlb2-44935832 .ml-form-fieldRow input {
-        background-color: #0a0a0a !important; color: #ffffff !important; border-color: #2a2a2a;
-        border-radius: 6px !important; border-style: solid !important; border-width: 1px !important;
-        font-family: 'Rajdhani', Arial, sans-serif; font-size: 14px !important; line-height: 21px !important;
-        padding: 12px 14px !important; width: 100% !important; box-sizing: border-box !important;
-      }
-      #mlb2-44935832 .ml-form-formContent { margin: 0 0 12px 0; width: 100%; }
-      #mlb2-44935832 .ml-form-embedSubmit { margin: 0; float: left; width: 100%; }
-      #mlb2-44935832 .ml-form-embedSubmit button {
-        background-color: #FFD100 !important; border: none !important; border-radius: 6px !important;
-        color: #0a0a0a !important; cursor: pointer; font-family: 'Rajdhani', Arial, sans-serif !important;
-        font-size: 13px !important; font-weight: 800 !important; letter-spacing:0.5px; text-transform:uppercase;
-        line-height: 21px !important; padding: 12px !important; width: 100% !important; box-sizing: border-box !important;
-      }
-      #mlb2-44935832 .ml-form-embedSubmit button:hover { background-color: #e0b800 !important; }
-      #mlb2-44935832 .ml-form-embedSubmit button.loading { display: none; }
-      #mlb2-44935832 .ml-form-successContent h4 { color: #FFD100; font-family: 'Bebas Neue', Arial, sans-serif; font-size: 22px; margin:0 0 8px 0; text-align:left; }
-      #mlb2-44935832 .ml-form-successContent p { color: #b5b5b5; font-family: 'Rajdhani', Arial, sans-serif; font-size: 13px; margin:0; text-align:left; }
-      .ml-error input { border-color: red!important; }
-    </style>
-
-    <div id="mlb2-44935832" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-44935832">
-      <div class="ml-form-align-center">
-        <div class="ml-form-embedWrapper embedForm">
-          <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
-            <div class="ml-form-embedContent">
-              <h4>Get Early Access</h4>
-              <p>Enter email to get on the list</p>
-            </div>
-            <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2581732/forms/196107437019760500/subscribe" data-code="" method="post" target="_blank">
-              <div class="ml-form-formContent">
-                <div class="ml-form-fieldRow ml-last-item">
-                  <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
-                    <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="Email" autocomplete="email">
-                  </div>
-                </div>
-              </div>
-              <input type="hidden" name="ml-submit" value="1">
-              <div class="ml-form-embedSubmit">
-                <button type="submit" class="primary">Notify Me</button>
-                <button disabled="disabled" style="display: none;" type="button" class="loading">
-                  <div class="ml-form-embedSubmitLoad"></div>
-                  <span class="sr-only">Loading...</span>
-                </button>
-              </div>
-              <input type="hidden" name="anticsrf" value="true">
-            </form>
-          </div>
-          <div class="ml-form-successBody row-success" style="display: none">
-            <div class="ml-form-successContent">
-              <h4>Thank you!</h4>
-              <p>You have successfully joined our subscriber list.</p>
-            </div>
-          </div>
+      <div class="grid grid-4">
+        <div class="card">
+          <span class="tag tag-soon">Coming Soon</span>
+          <h3>Prisms &amp; Prism Poles</h3>
+          <p>Single &amp; triple prisms, fixed-height and telescoping poles built for daily field abuse.</p>
+        </div>
+        <div class="card">
+          <span class="tag tag-soon">Coming Soon</span>
+          <h3>Pole Accessories</h3>
+          <p>Bipods, tribrachs, carry bags, tip replacements — the small stuff that keeps you working.</p>
+        </div>
+        <div class="card">
+          <span class="tag tag-soon">Coming Soon</span>
+          <h3>Safety Gear</h3>
+          <p>Hard hats, hi-vis vests, and gloves rated for real jobsites, not just OSHA checkboxes.</p>
+        </div>
+        <div class="card">
+          <span class="tag tag-soon">Coming Soon</span>
+          <h3>Custom Accessories</h3>
+          <p>3D-printed mounts, holders, and field-tested add-ons designed by us, for us.</p>
         </div>
       </div>
     </div>
+  </section>
 
-    <script>
-      function ml_webform_success_44935832() {
-        var $ = ml_jQuery || jQuery;
-        $('.ml-subscribe-form-44935832 .row-success').show();
-        $('.ml-subscribe-form-44935832 .row-form').hide();
-      }
-    </script>
-    <script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
-    <script>
-      fetch("https://assets.mailerlite.com/jsonp/2581732/forms/196107437019760500/takel")
-    </script>
-    <p class="form-note">We'll only email you about TotalStationTech updates. No spam.</p>
-
-    <div class="follow">
-      Follow The Journey
-      <div class="socials">
-        <a href="#" aria-label="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 8.5a3 3 0 0 0-2.1-2.1C18.1 6 12 6 12 6s-6.1 0-7.9.4A3 3 0 0 0 2 8.5 31 31 0 0 0 1.6 12 31 31 0 0 0 2 15.5a3 3 0 0 0 2.1 2.1C5.9 18 12 18 12 18s6.1 0 7.9-.4a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .4-3.5 31 31 0 0 0-.4-3.5z"/><path d="M10 9.75l5 2.25-5 2.25z"/></svg></a>
-        <a href="#" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg></a>
-        <a href="#" aria-label="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 13v4"/></svg></a>
+  <!-- ===== LEARN ===== -->
+  <section id="learn">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Learn From The Field</div>
+        <h2>Video breakdowns, shot on real jobsites.</h2>
+        <p>Setup, workflow, and troubleshooting — no studio fluff.</p>
+      </div>
+      <div class="grid grid-3">
+        <div class="card">
+          <h3>Setup &amp; Calibration</h3>
+          <p>Getting your instrument dialed in fast, every time, on any site.</p>
+          <a href="https://www.youtube.com/@TotalStationTech" target="_blank" rel="noopener" class="btn btn-outline">Watch →</a>
+        </div>
+        <div class="card">
+          <h3>Layout Workflow</h3>
+          <p>Point codes, staking, and keeping your data collector organized under pressure.</p>
+          <a href="https://www.youtube.com/@TotalStationTech" target="_blank" rel="noopener" class="btn btn-outline">Watch →</a>
+        </div>
+        <div class="card">
+          <h3>Troubleshooting</h3>
+          <p>What to do when the instrument, the data, or the day goes sideways.</p>
+          <a href="https://www.youtube.com/@TotalStationTech" target="_blank" rel="noopener" class="btn btn-outline">Watch →</a>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
+  <!-- ===== COACHING ===== -->
+  <section id="coaching" class="alt-bg">
+    <div class="wrap coach-wrap">
+      <div>
+        <div class="eyebrow">Coaching &amp; Consulting</div>
+        <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:600;margin:0 0 16px;">One-on-one and crew-level coaching on field construction layout.</h2>
+        <p style="color:var(--gray);margin:0 0 26px;">Workflow, equipment setup, point management, and getting faster without cutting corners.</p>
+        <ul class="coach-list">
+          <li>Total station &amp; data collector workflow coaching</li>
+          <li>Layout crew training for contractors and MEPs</li>
+          <li>Equipment setup &amp; troubleshooting consulting</li>
+          <li>Point code systems &amp; field data organization</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary">Get On The List</a>
+      </div>
+      <div class="legal">
+        <h3>⚠ Important — Please Read</h3>
+        <p><strong>TotalStationTech provides field construction layout coaching and consulting only.</strong> This is not land surveying, and TotalStationTech is not a licensed land surveying firm.</p>
+        <p>Construction layout — placing points from an approved plan for building purposes — does not require a survey license in most jurisdictions. Boundary surveys, legal descriptions, and land surveying services must be performed by a <strong>licensed land surveyor</strong> in your state.</p>
+        <p>If your project requires boundary determination, ALTA surveys, or any service requiring a licensed surveyor, please engage a licensed land surveying firm directly. Nothing on this site should be interpreted as land surveying services or advice.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WHO IT'S FOR ===== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Built For</div>
+        <h2>Who this is built for.</h2>
+      </div>
+      <ul class="who-list">
+        <li>Licensed Surveyors &amp; Survey Crews</li>
+        <li>MEP Contractors</li>
+        <li>Electricians</li>
+        <li>Layout Technicians</li>
+        <li>General Contractors</li>
+        <li>Field Engineers</li>
+        <li>Anyone Running A Total Station</li>
+        <li>Hardcore Field Guys</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== SIGNUP / FOUNDER FORM ===== -->
+  <section id="contact" class="alt-bg">
+    <div class="wrap">
+      <div class="section-head" style="margin:0 auto 40px;text-align:center;max-width:600px;">
+        <div class="eyebrow" style="justify-content:center;">Join The Founding Members</div>
+        <h2>Be first in line when the rest of TotalStationTech goes live.</h2>
+        <p>Tools, shop, and coaching are launching in phases. Get on the list and lock in founder pricing.</p>
+      </div>
+
+      <form class="signup-panel" action="mailto:totalstationtechnician@gmail.com" method="post" enctype="text/plain">
+        <h3>Get Early Access</h3>
+        <p class="sub">Tell us who you are and what would actually help — no spam, just updates when tools go live.</p>
+
+        <div class="field">
+          <label for="ts-name">Name</label>
+          <input id="ts-name" name="Name" type="text" required>
+        </div>
+        <div class="field">
+          <label for="ts-email">Email</label>
+          <input id="ts-email" name="Email" type="email" required>
+        </div>
+        <div class="field">
+          <label for="ts-contact">Phone or preferred contact</label>
+          <input id="ts-contact" name="Contact" type="text">
+        </div>
+        <div class="field">
+          <label for="ts-company">Company</label>
+          <input id="ts-company" name="Company" type="text">
+        </div>
+        <div class="field">
+          <label for="ts-headache">What's slowing you down in the field right now?</label>
+          <textarea id="ts-headache" name="Field Headache"></textarea>
+        </div>
+        <div class="field">
+          <label for="ts-build">What would you want us to build first?</label>
+          <textarea id="ts-build" name="Build Next"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Join as a Founding Member</button>
+        <p class="form-note">This opens your email app with everything filled in — just hit send. We'll only email you about TotalStationTech updates.</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
 <footer>
-  <div class="container footer-inner">
-    <div class="badge-hex">
-      <div class="tst">TST</div>
-      <div class="sub">TOTAL STATION TECH</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <div class="foot-brand">
+          <span class="badge">TST</span>
+          <span class="brand-mark">TOTAL<span>STATION</span>TECH</span>
+        </div>
+        <p class="foot-mission">Equipping total station technicians with the tools, gear, and knowledge to run faster, cleaner layout — built by field guys, for field guys.</p>
+      </div>
+
+      <div class="foot-links">
+        <span class="headline">Sister Site</span>
+        <a href="https://bim-press.com" target="_blank" rel="noopener">BIM-Press.com</a>
+        <a href="https://www.youtube.com/@BIM-Press" target="_blank" rel="noopener">BIM-Press on YouTube</a>
+      </div>
+
+      <div class="foot-links">
+        <span class="headline">Support</span>
+        <a href="mailto:totalstationtechnician@gmail.com?subject=Contact%20-%20TotalStationTech.com">Contact Us</a>
+        <a href="mailto:totalstationtechnician@gmail.com?subject=Error%20Report%20-%20TotalStationTech.com&body=Page%20URL%3A%20%0APage%2FTool%3A%20%0AWhat%20happened%3A%20%0ASteps%20to%20reproduce%3A%20%0ABrowser%2FDevice%3A%20">Report an Error</a>
+      </div>
     </div>
-    <div class="mission">
-      <h3>Our Mission</h3>
-      <p>To equip total station technicians with the tools, gear, and knowledge to run faster, cleaner layout — built by field guys, for field guys.</p>
-    </div>
-    <div class="footer-brand">
-      <div class="name">TOTALSTATIONTECH</div>
-      <div class="tag">Total Station Tech For Total Station Techs</div>
-      <div class="copy">© 2026 TotalStationTech. All rights reserved. Field construction layout services only — not a licensed land surveying provider.</div>
+
+    <div class="foot-bottom">
+      <span>© 2026 TotalStationTech. Field construction layout services only — not a licensed land surveying provider.</span>
     </div>
   </div>
-
-  <div class="footer-actions">
-    <a class="btn btn-outline" href="mailto:totalstationtechnician@gmail.com?subject=Contact%20-%20TotalStationTech.com" aria-label="Contact us by email">Contact Us</a>
-    <a class="btn btn-ghost" href="mailto:totalstationtechnician@gmail.com?subject=Error%20Report%20-%20TotalStationTech.com&body=Page%20URL%3A%20%0APage%2FTool%3A%20%0AWhat%20happened%3A%20%0ASteps%20to%20reproduce%3A%20%0ABrowser%2FDevice%3A%20" aria-label="Report an error by email">Report an Error</a>
-  </div>
-
-  <div class="hazard-bar"></div>
 </footer>
 
 </body>
