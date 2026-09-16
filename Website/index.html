@@ -331,9 +331,9 @@
   @media (max-width:768px){
     .hero-bg, .hero-aside{display:none;}
     .hero-photo{left:0;right:0;width:100%;aspect-ratio:auto;transform:none;-webkit-mask-image:none;mask-image:none;}
-    .hero-photo img{object-position:36% 30%;}
+    .hero-photo img{object-position:55% 30%;} /* keeps both the hard hat logo and the TST badge on the instrument in frame */
     .hero::after{background:linear-gradient(180deg,rgba(12,12,13,0) 30%,rgba(12,12,13,0.5) 58%,rgba(12,12,13,0.93) 100%);}
-    .hero-inner{min-height:clamp(340px,100vw,600px);padding:24px 20px 22px;align-items:flex-end;}
+    .hero-inner{min-height:clamp(300px,80vw,560px);padding:24px 20px 22px;align-items:flex-end;}
     .hero-copy{flex:1 1 auto;}
     .hero h1{text-transform:none;font-weight:800;font-size:clamp(26px,8.4vw,48px);line-height:1.04;letter-spacing:-0.01em;}
     .hero-rule{width:100%;height:2px;margin:12px 0 10px;clip-path:none;background:var(--yellow);}
@@ -483,15 +483,6 @@
   .card p{margin:0;color:var(--gray);font-size:0.9rem;flex-grow:1;}
   .card .btn{align-self:flex-start;margin-top:4px;}
 
-  /* Games & Training: a hazard stripe on top sets it apart from Apps.
-     Grid fills the row with however many games exist (2 now, 3 across max as more are added). */
-  .games-section{position:relative;background:radial-gradient(ellipse at 90% 0%, rgba(245,197,24,0.08), transparent 55%), var(--black);}
-  .games-section::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--stripe);opacity:0.7;}
-  .grid-games{grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));}
-  @media (min-width:1000px){.grid-games{grid-template-columns:repeat(auto-fit, minmax(340px, 1fr));}}
-  @media (max-width:620px){.grid-games{grid-template-columns:1fr;}}
-  .games-section .card{border-color:var(--yellow-dim);padding:30px;}
-  .games-section .card h3{font-size:1.35rem;font-family:'Oswald',system-ui,sans-serif;text-transform:uppercase;letter-spacing:0.04em;}
 
   /* Promo video popup (uses the browser's built-in <dialog>) */
   .video-modal{
@@ -629,8 +620,8 @@
         </div>
         <div class="social-links">
           <a href="https://www.youtube.com/@TotalStationTech" target="_blank" rel="noopener" aria-label="TotalStationTech on YouTube"><svg aria-hidden="true"><use href="#i-youtube"/></svg></a>
-          <!-- [PLACEHOLDER - CONFIRM WITH ROBBIE] Instagram and Facebook page URLs are not known yet; replace href="#" with the real profile links -->
-          <a href="#" class="social-extra" aria-label="TotalStationTech on Instagram (link coming soon)"><svg aria-hidden="true"><use href="#i-instagram"/></svg></a>
+          <a href="https://www.instagram.com/totalstationtech/" target="_blank" rel="noopener" class="social-extra" aria-label="TotalStationTech on Instagram"><svg aria-hidden="true"><use href="#i-instagram"/></svg></a>
+          <!-- [PLACEHOLDER - CONFIRM WITH ROBBIE] Facebook page URL not known yet; replace href="#" with the real profile link -->
           <a href="#" class="social-extra" aria-label="TotalStationTech on Facebook (link coming soon)"><svg aria-hidden="true"><use href="#i-facebook"/></svg></a>
         </div>
       </div>
@@ -668,7 +659,7 @@
             <ul class="dropdown" id="dd-games">
               <li><a href="https://stake-out.netlify.app/" target="_blank" rel="noopener">Stake-Out</a></li>
               <li><a href="https://tribrachgame.netlify.app/" target="_blank" rel="noopener">TriBrach</a></li>
-              <li><a href="#games">More Games</a></li>
+              <li><a href="#apps">More Games</a></li>
             </ul>
           </li>
           <li><button type="button" class="nav-link" data-open-video><svg class="ni" aria-hidden="true"><use href="#i-play"/></svg>Videos</button></li>
@@ -803,39 +794,9 @@
     <ul class="trust-grid">
       <li><svg aria-hidden="true"><use href="#i-hardhat"/></svg><div><h3>Built for<br>the real world</h3><p>Tools, knowledge, and practice for the jobsite.</p></div></li>
       <li><svg aria-hidden="true"><use href="#i-gear"/></svg><div><h3>Field tested<br>technology</h3><p>Proven workflows that save time and reduce rework.</p></div></li>
-      <!-- [PLACEHOLDER - CONFIRM WITH ROBBIE] "Trusted by MEP professionals" is copied from the concept image; confirm you're comfortable making this claim -->
-      <li><svg aria-hidden="true"><use href="#i-people"/></svg><div><h3>Trusted by<br>MEP professionals</h3><p>Contractors. Builders. Designers. Field crews. Just like you.</p></div></li>
+      <li><svg aria-hidden="true"><use href="#i-people"/></svg><div><h3>Serving<br>MEP professionals</h3><p>Contractors. Builders. Designers. Field crews. Just like you.</p></div></li>
       <li><svg aria-hidden="true"><use href="#i-trend"/></svg><div><h3>Learn. Apply. Advance.</h3><p>Practical tools and skills that move your career forward.</p></div></li>
     </ul>
-  </section>
-
-  <!-- ===== GAMES & TRAINING ===== -->
-  <section id="games" class="games-section">
-    <div class="wrap">
-      <div class="section-head">
-        <div class="eyebrow">Games &amp; Training</div>
-        <h2>Practice on your own time. No jobsite required.</h2>
-        <p>Simulators built to make you faster and more confident before you're out in the field.</p>
-      </div>
-      <!-- To add a game: copy one card below and change the name, text, and link -->
-      <div class="grid grid-games">
-
-        <div class="card">
-          <span class="tag tag-live">Live</span>
-          <h3>Stake-Out</h3>
-          <p>Practice. Improve. Get faster. A fun way to master layout.</p>
-          <a href="https://stake-out.netlify.app/" target="_blank" rel="noopener" class="btn btn-primary">Play Now</a>
-        </div>
-
-        <div class="card">
-          <span class="tag tag-live">Live</span>
-          <h3>TriBrach</h3>
-          <p>Learn. Level. Master. The ultimate tribrach simulator.</p>
-          <a href="https://tribrachgame.netlify.app/" target="_blank" rel="noopener" class="btn btn-primary">Play Now</a>
-        </div>
-
-      </div>
-    </div>
   </section>
 
   <!-- ===== SHOP ===== -->
@@ -1125,9 +1086,9 @@
     { name: "PDF-Inspect",     keywords: ["pdf inspect", "metadata"],                     anchor: "#apps" },
     { name: "Calculator",      keywords: ["calculator", "field calculator", "feet inches"], anchor: "#apps" },
     { name: "CSV Converter",   keywords: ["csv", "csv converter"],                        anchor: "#apps" },
-    { name: "Games",           keywords: ["games", "training"],                          anchor: "#games" },
-    { name: "Stake-Out",       keywords: ["stakeout", "stake out", "staking"],            anchor: "#games" },
-    { name: "TriBrach",        keywords: ["tribrach", "leveling"],                        anchor: "#games" },
+    { name: "Games",           keywords: ["games", "training"],                          anchor: "#apps" },
+    { name: "Stake-Out",       keywords: ["stakeout", "stake out", "staking"],            anchor: "#apps" },
+    { name: "TriBrach",        keywords: ["tribrach", "leveling"],                        anchor: "#apps" },
     { name: "Videos",          keywords: ["video", "videos", "ad"],                       action: "video" },
     { name: "Shop",            keywords: ["shop", "gear"],                                anchor: "#shop" },
     { name: "Learn",           keywords: ["learn"],                                       anchor: "#learn" },
