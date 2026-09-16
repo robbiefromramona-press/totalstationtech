@@ -87,6 +87,29 @@
     display:flex;align-items:center;justify-content:space-between;gap:16px;
     padding:6px 24px;max-width:1180px;margin:0 auto;
   }
+  /* Site search (hardcoded list, jumps to a section) */
+  .site-search{position:relative;width:100%;max-width:300px;}
+  .site-search svg.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--gray-dim);pointer-events:none;}
+  .site-search input{
+    width:100%;padding:7px 12px 7px 32px;border-radius:6px;border:1px solid var(--charcoal-2);
+    background:var(--charcoal);color:var(--white);font-family:'Inter',sans-serif;font-size:13px;
+  }
+  .site-search input::placeholder{color:var(--gray-dim);}
+  .site-search input:focus{border-color:var(--yellow);outline:none;}
+  .search-results{
+    position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:60;
+    list-style:none;margin:0;padding:6px 0;
+    background:var(--charcoal);border:1px solid var(--charcoal-2);border-radius:8px;
+    box-shadow:0 14px 30px rgba(0,0,0,0.5);
+  }
+  .search-results[hidden]{display:none;}
+  .search-results button{
+    display:block;width:100%;text-align:left;background:none;border:0;cursor:pointer;
+    padding:8px 14px;color:var(--white);font-family:'Inter',sans-serif;font-size:13px;
+  }
+  .search-results button:hover, .search-results button.active{background:var(--charcoal-2);color:var(--yellow);}
+  .search-results .no-match{padding:8px 14px;color:var(--gray-dim);font-size:13px;}
+
   .social-links{display:flex;align-items:center;gap:6px;}
   /* To add Instagram/Facebook later: copy the YouTube <a> line in the HTML and swap the link + icon */
   .social-links a{
@@ -307,7 +330,13 @@
   <!-- Row 1: slim utility strip -->
   <div class="util-bar">
     <div class="util-inner">
-      <div class="site-search" role="search"><!-- search box goes here --></div>
+      <div class="site-search" role="search">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input type="search" id="site-search-input" placeholder="Search apps, games, videos…"
+               aria-label="Search the site" autocomplete="off"
+               role="combobox" aria-controls="search-results" aria-expanded="false">
+        <ul id="search-results" class="search-results" role="listbox" hidden></ul>
+      </div>
       <div class="social-links">
         <a href="https://www.youtube.com/@TotalStationTech" target="_blank" rel="noopener" aria-label="TotalStationTech on YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg></a>
         <!-- Instagram / Facebook go here later: copy the line above, change href, aria-label and icon -->
@@ -682,11 +711,128 @@
     }
   });
 
+  // Expose the "close everything" helpers so search and the video popup can use them
+  window.tstCloseMenus = function(){ closeDropdowns(); closeMobileMenu(); };
+
   // People who turn on "reduce motion" in their OS get a still logo instead of the loop
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const badge = document.querySelector('.badge-video');
     if (badge) { badge.removeAttribute('autoplay'); badge.pause(); }
   }
+})();
+
+/* =========================================================
+   SITE SEARCH
+   No server needed: a hand-written list of what's on the page.
+   Typing filters the list; click a result (or press Enter for the
+   top one) and the page scrolls to that section.
+   To add something searchable, add a line to searchIndex below.
+   "action: 'video'" opens the promo video popup instead of scrolling.
+   ========================================================= */
+(function(){
+  const searchIndex = [
+    { name: "Home",            keywords: ["home"],                                        anchor: "#home" },
+    { name: "Apps",            keywords: ["apps", "tools"],                               anchor: "#apps" },
+    { name: "CoordXY",         keywords: ["coordxy", "coordx", "pdf to csv", "layout points"], anchor: "#apps" },
+    { name: "P-DXF",           keywords: ["pdxf", "p-dxf", "dxf", "pdf calibration"],     anchor: "#apps" },
+    { name: "QR-Point",        keywords: ["qr", "qr point", "qr code"],                   anchor: "#apps" },
+    { name: "PDF-Inspect",     keywords: ["pdf inspect", "metadata"],                     anchor: "#apps" },
+    { name: "Calculator",      keywords: ["calculator", "field calculator", "feet inches"], anchor: "#apps" },
+    { name: "CSV Converter",   keywords: ["csv", "csv converter"],                        anchor: "#apps" },
+    { name: "Games & Training", keywords: ["games", "training"],                          anchor: "#games" },
+    { name: "Stake-Out",       keywords: ["stakeout", "stake out", "staking"],            anchor: "#games" },
+    { name: "TriBrach",        keywords: ["tribrach", "leveling"],                        anchor: "#games" },
+    { name: "Videos",          keywords: ["video", "videos", "ad"],                       action: "video" },
+    { name: "Shop",            keywords: ["shop", "gear"],                                anchor: "#shop" },
+    { name: "Learn",           keywords: ["learn"],                                       anchor: "#learn" },
+    { name: "Coaching",        keywords: ["coaching", "consulting"],                      anchor: "#coaching" },
+    { name: "Contact",         keywords: ["contact", "email"],                            anchor: "#contact" },
+  ];
+
+  const input = document.getElementById('site-search-input');
+  const list = document.getElementById('search-results');
+  let matches = [];
+  let activeIndex = 0;
+
+  function findMatches(query){
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    return searchIndex.filter(item =>
+      item.name.toLowerCase().includes(q) || item.keywords.some(k => k.includes(q))
+    );
+  }
+
+  function render(){
+    list.innerHTML = '';
+    if (!input.value.trim()) { hide(); return; }
+    if (matches.length === 0) {
+      list.innerHTML = '<li class="no-match">No matches</li>';
+    } else {
+      matches.forEach((item, i) => {
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = item.name;
+        btn.setAttribute('role', 'option');
+        if (i === activeIndex) btn.classList.add('active');
+        btn.addEventListener('click', () => go(item));
+        li.appendChild(btn);
+        list.appendChild(li);
+      });
+    }
+    list.hidden = false;
+    input.setAttribute('aria-expanded', 'true');
+  }
+
+  function hide(){
+    list.hidden = true;
+    input.setAttribute('aria-expanded', 'false');
+  }
+
+  function go(item){
+    input.value = '';
+    hide();
+    input.blur();
+    if (window.tstCloseMenus) window.tstCloseMenus();
+    if (item.action === 'video') {
+      if (window.tstOpenVideo) window.tstOpenVideo();
+      return;
+    }
+    const target = document.querySelector(item.anchor);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.replaceState(null, '', item.anchor);
+    }
+  }
+
+  input.addEventListener('input', () => {
+    matches = findMatches(input.value);
+    activeIndex = 0;
+    render();
+  });
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown' && matches.length) {
+      e.preventDefault();
+      activeIndex = (activeIndex + 1) % matches.length;
+      render();
+    } else if (e.key === 'ArrowUp' && matches.length) {
+      e.preventDefault();
+      activeIndex = (activeIndex - 1 + matches.length) % matches.length;
+      render();
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (matches[activeIndex]) go(matches[activeIndex]);
+    } else if (e.key === 'Escape') {
+      input.value = '';
+      hide();
+    }
+  });
+
+  // Click anywhere outside the search box closes the results
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.site-search')) hide();
+  });
 })();
 </script>
 
