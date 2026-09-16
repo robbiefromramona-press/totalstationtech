@@ -189,15 +189,24 @@
   }
 
   /* ===== Hero ===== */
-  .hero{position:relative;overflow:hidden;min-height:560px;display:flex;align-items:center;}
-  .hero video{
-    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-    opacity:0.35;z-index:0;
-  }
+  .hero{position:relative;overflow:hidden;min-height:620px;display:flex;align-items:center;background:var(--black);}
+  /* Hero photo sits on the right; its left edge fades into black behind the headline */
+  .hero-photo{position:absolute;top:0;right:0;bottom:0;width:72%;z-index:0;display:block;}
+  .hero-photo img{width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 30%;}
   .hero::after{
-    content:"";position:absolute;inset:0;
-    background:linear-gradient(180deg, rgba(12,12,13,0.6) 0%, rgba(12,12,13,0.92) 100%);
-    z-index:1;
+    content:"";position:absolute;inset:0;z-index:1;
+    background:
+      linear-gradient(90deg, var(--black) 28%, rgba(12,12,13,0.82) 40%, rgba(12,12,13,0.3) 58%, rgba(12,12,13,0) 72%),
+      linear-gradient(180deg, rgba(12,12,13,0) 70%, var(--black) 100%);
+  }
+  .hero .hero-inner > *{max-width:600px;}
+  /* Tablet & phone: photo fills the hero, darker overlay so the text stays readable */
+  @media (max-width:860px){
+    .hero-photo{width:100%;}
+    .hero-photo img{object-position:30% 30%;}
+    .hero::after{
+      background:linear-gradient(180deg, rgba(12,12,13,0.55) 0%, rgba(12,12,13,0.75) 45%, rgba(12,12,13,0.95) 100%);
+    }
   }
   .hero-inner{position:relative;z-index:2;padding:100px 24px 70px;width:100%;}
   .eyebrow{
@@ -425,9 +434,16 @@
 
   <!-- ===== HERO ===== -->
   <section class="hero" id="home">
-    <video autoplay muted loop playsinline poster="">
-      <source src="videos/totalstationtech_hero.mp4" type="video/mp4">
-    </video>
+    <!-- Hero photo: browser picks WebP (smaller) if it can, and the 900px version on phones -->
+    <picture class="hero-photo">
+      <source type="image/webp"
+              srcset="assets/hero/tst-hero-900.webp 900w, assets/hero/tst-hero.webp 1672w"
+              sizes="(max-width:860px) 100vw, 72vw">
+      <img src="assets/hero/tst-hero.jpg"
+           srcset="assets/hero/tst-hero-900.jpg 900w, assets/hero/tst-hero.jpg 1672w"
+           sizes="(max-width:860px) 100vw, 72vw"
+           width="1672" height="941" alt="" fetchpriority="high">
+    </picture>
     <div class="hero-inner wrap">
       <div class="eyebrow">Field Layout · MEP · Technology</div>
       <h1>Total Station Tech.<br>For <em>Total Station</em> Techs.</h1>
