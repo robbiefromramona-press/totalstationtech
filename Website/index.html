@@ -65,8 +65,8 @@
     border-bottom:1px solid var(--charcoal-2);
   }
   .nav-inner{
-    display:flex;align-items:center;justify-content:space-between;
-    padding:14px 24px;max-width:1180px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+    padding:6px 24px;max-width:1180px;margin:0 auto;
   }
   .brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
   .badge{
@@ -80,18 +80,89 @@
   }
   .brand-mark{font-size:18px;font-weight:600;letter-spacing:0.08em;color:var(--white);}
   .brand-mark span{color:var(--yellow);}
-  nav ul{list-style:none;display:flex;gap:26px;margin:0;padding:0;}
-  nav a{font-size:13px;font-weight:600;text-decoration:none;color:var(--gray);}
-  nav a:hover{color:var(--yellow);}
+
+  /* Header row 1: slim utility strip (search + social icons) */
+  .util-bar{border-bottom:1px solid var(--charcoal-2);}
+  .util-inner{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:6px 24px;max-width:1180px;margin:0 auto;
+  }
+  .social-links{display:flex;align-items:center;gap:6px;}
+  /* To add Instagram/Facebook later: copy the YouTube <a> line in the HTML and swap the link + icon */
+  .social-links a{
+    display:flex;align-items:center;justify-content:center;width:32px;height:32px;
+    border-radius:6px;color:var(--gray);
+  }
+  .social-links a:hover{color:var(--yellow);background:var(--charcoal-2);}
+  .social-links svg{width:20px;height:20px;}
+
+  /* Animated logo badge (video already has its own hexagon + glow, so no clip-path here) */
+  .badge-video{width:56px;height:56px;object-fit:contain;flex-shrink:0;}
+
+  /* Header row 2: main nav */
+  nav ul{list-style:none;display:flex;align-items:center;gap:22px;margin:0;padding:0;}
+  .nav-link{
+    font-family:'Oswald',system-ui,sans-serif;text-transform:uppercase;letter-spacing:0.04em;
+    font-size:13px;font-weight:600;text-decoration:none;color:var(--gray);
+    background:none;border:0;padding:10px 0;cursor:pointer;
+    display:inline-flex;align-items:center;gap:5px;
+  }
+  .nav-link:hover, .has-dropdown.open > .nav-link{color:var(--yellow);}
+  .nav-link .caret{width:10px;height:10px;transition:transform .2s;}
+  .has-dropdown.open > .nav-link .caret{transform:rotate(180deg);}
+
+  /* Dropdown menus (Apps, Games & Training) */
+  .has-dropdown{position:relative;}
+  nav ul.dropdown{
+    display:none;position:absolute;top:100%;left:-16px;min-width:220px;
+    flex-direction:column;align-items:stretch;gap:0;padding:8px 0;
+    background:var(--charcoal);border:1px solid var(--charcoal-2);border-radius:8px;
+    box-shadow:0 14px 30px rgba(0,0,0,0.5);
+  }
+  .has-dropdown.open > ul.dropdown{display:flex;}
+  .dropdown a{
+    display:block;padding:9px 16px;font-size:13px;font-weight:600;text-decoration:none;
+    color:var(--white);font-family:'Oswald',system-ui,sans-serif;text-transform:uppercase;letter-spacing:0.04em;
+  }
+  .dropdown a:hover, .dropdown a:focus-visible{background:var(--charcoal-2);color:var(--yellow);}
+  .dropdown .soon{font-size:10px;color:var(--gray-dim);margin-left:6px;}
+  .dropdown .divider{height:1px;background:var(--charcoal-2);margin:6px 0;}
+  .dropdown .see-all{color:var(--yellow);}
+  /* Desktop mice: open on hover too (tap/click still works everywhere) */
+  @media (hover:hover) and (min-width:1081px){
+    .has-dropdown:hover > ul.dropdown{display:flex;}
+    .has-dropdown:hover > .nav-link{color:var(--yellow);}
+  }
+
   .nav-cta{
     background:var(--yellow);color:var(--black);padding:10px 18px;border-radius:6px;
     font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;
+    font-family:'Oswald',system-ui,sans-serif;text-transform:uppercase;letter-spacing:0.04em;
   }
+  .nav-cta:hover{background:var(--white);}
   .nav-toggle{display:none;}
-  @media (max-width:860px){
-    nav ul{display:none;}
-    .nav-toggle{display:block;background:none;border:1px solid var(--charcoal-2);color:var(--white);
-      padding:8px 12px;border-radius:6px;font-family:'Oswald';}
+
+  /* Tablet & phone: nav folds into the hamburger menu */
+  @media (max-width:1080px){
+    .nav-toggle{display:inline-flex;align-items:center;gap:8px;background:none;border:1px solid var(--charcoal-2);color:var(--white);
+      padding:8px 12px;border-radius:6px;font-family:'Oswald';text-transform:uppercase;letter-spacing:0.04em;cursor:pointer;margin-left:auto;}
+    .nav-inner{gap:14px;}
+    #primary-nav{
+      display:none;position:absolute;top:100%;left:0;right:0;
+      background:var(--black);border-bottom:1px solid var(--charcoal-2);
+      max-height:calc(100vh - 130px);overflow-y:auto;
+    }
+    #primary-nav.open{display:block;}
+    #primary-nav > ul{flex-direction:column;align-items:stretch;gap:0;padding:6px 24px 16px;max-width:1180px;margin:0 auto;}
+    #primary-nav > ul > li{border-bottom:1px solid var(--charcoal-2);}
+    #primary-nav .nav-link{width:100%;justify-content:space-between;padding:14px 0;font-size:15px;}
+    nav ul.dropdown{position:static;box-shadow:none;border:0;border-radius:0;background:transparent;padding:0 0 10px 14px;min-width:0;}
+    .dropdown a{padding:10px 0;}
+    .dropdown a:hover{background:none;}
+  }
+  @media (max-width:620px){
+    .nav-cta{display:none;}
+    .brand-mark{font-size:15px;}
   }
 
   /* ===== Hero ===== */
@@ -105,7 +176,7 @@
     background:linear-gradient(180deg, rgba(12,12,13,0.6) 0%, rgba(12,12,13,0.92) 100%);
     z-index:1;
   }
-  .hero-inner{position:relative;z-index:2;padding:100px 0 70px;}
+  .hero-inner{position:relative;z-index:2;padding:100px 24px 70px;width:100%;}
   .eyebrow{
     color:var(--yellow);font-size:12px;font-weight:600;letter-spacing:0.18em;
     display:flex;align-items:center;gap:10px;margin-bottom:18px;
@@ -135,6 +206,8 @@
 
   /* ===== Sections ===== */
   section{padding:80px 0;}
+  /* Leave room for the sticky header when jumping to a section */
+  section[id]{scroll-margin-top:120px;}
   .section-head{margin-bottom:44px;max-width:640px;}
   .section-head .eyebrow{margin-bottom:10px;}
   .section-head h2{font-size:clamp(1.6rem,3vw,2.2rem);margin:0 0 12px;color:var(--white);font-weight:600;}
@@ -231,23 +304,66 @@
 <div class="hazard-bar"></div>
 
 <header>
+  <!-- Row 1: slim utility strip -->
+  <div class="util-bar">
+    <div class="util-inner">
+      <div class="site-search" role="search"><!-- search box goes here --></div>
+      <div class="social-links">
+        <a href="https://www.youtube.com/@TotalStationTech" target="_blank" rel="noopener" aria-label="TotalStationTech on YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg></a>
+        <!-- Instagram / Facebook go here later: copy the line above, change href, aria-label and icon -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2: logo + main nav + CTA -->
   <div class="nav-inner">
-    <a href="#home" class="brand">
-      <span class="badge">TST</span>
+    <a href="#home" class="brand" aria-label="TotalStationTech home">
+      <video class="badge-video" autoplay muted loop playsinline aria-hidden="true"
+             poster="assets/badge/tst-badge-poster.png">
+        <source src="assets/badge/tst-badge-loop.webm" type="video/webm">
+        <source src="assets/badge/tst-badge-loop-fallback.mp4" type="video/mp4">
+      </video>
       <span class="brand-mark">TOTAL<span>STATION</span>TECH</span>
     </a>
-    <nav aria-label="Primary">
+    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      Menu
+    </button>
+    <nav id="primary-nav" aria-label="Primary">
       <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#tools">Tools</a></li>
-        <li><a href="https://tst-calc.netlify.app" target="_blank" rel="noopener">Calculator</a></li>
-        <li><a href="#shop">Shop</a></li>
-        <li><a href="#learn">Learn</a></li>
-        <li><a href="#coaching">Coaching</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#home" class="nav-link">Home</a></li>
+        <li class="has-dropdown">
+          <button type="button" class="nav-link" aria-expanded="false" aria-controls="dd-apps">
+            Apps <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+          </button>
+          <ul class="dropdown" id="dd-apps">
+            <li><a href="https://coordx-press.netlify.app/" target="_blank" rel="noopener">CoordXY</a></li>
+            <li><a href="#apps">P-DXF <span class="soon">Coming Soon</span></a></li>
+            <li><a href="https://qr-point.netlify.app/" target="_blank" rel="noopener">QR-Point</a></li>
+            <li><a href="https://pdf-inspect.netlify.app/" target="_blank" rel="noopener">PDF-Inspect</a></li>
+            <li><a href="https://tst-calc.netlify.app" target="_blank" rel="noopener">Calculator</a></li>
+            <li><a href="https://press-csv-converter.netlify.app" target="_blank" rel="noopener">CSV Converter</a></li>
+            <li class="divider" role="separator"></li>
+            <li><a href="#apps" class="see-all">All Apps →</a></li>
+          </ul>
+        </li>
+        <li class="has-dropdown">
+          <button type="button" class="nav-link" aria-expanded="false" aria-controls="dd-games">
+            Games &amp; Training <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+          </button>
+          <ul class="dropdown" id="dd-games">
+            <li><a href="https://stake-out.netlify.app/" target="_blank" rel="noopener">Stake-Out</a></li>
+            <li><a href="https://tribrachgame.netlify.app/" target="_blank" rel="noopener">TriBrach</a></li>
+            <li class="divider" role="separator"></li>
+            <li><a href="#games" class="see-all">More Games →</a></li>
+          </ul>
+        </li>
+        <li><button type="button" class="nav-link" data-open-video>Videos</button></li>
+        <li><a href="https://bim-press.com" target="_blank" rel="noopener" class="nav-link">BIM-Press.com</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
       </ul>
     </nav>
-    <a href="#contact" class="nav-cta">Join The List</a>
+    <a href="#contact" class="nav-cta">At The Press Of A Button</a>
   </div>
 </header>
 
@@ -264,7 +380,7 @@
       <p class="lead">Tools, gear, and know-how for the people actually running the instrument — surveyors, MEPs, contractors, and every hardcore field guy in between.</p>
       <div class="hero-ctas">
         <a href="#shop" class="btn btn-primary">Shop Gear</a>
-        <a href="#tools" class="btn btn-outline">Try Free Tools</a>
+        <a href="#apps" class="btn btn-outline">Try Free Apps</a>
       </div>
       <div class="audience-tags">
         <span>Surveyors</span><span>MEP</span><span>Contractors</span>
@@ -275,7 +391,7 @@
   </section>
 
   <!-- ===== FIELD TOOLS ===== -->
-  <section id="tools">
+  <section id="apps">
     <div class="wrap">
       <div class="section-head">
         <div class="eyebrow">Field Tools · No Fluff</div>
@@ -497,6 +613,82 @@
     </div>
   </div>
 </footer>
+
+<script>
+/* =========================================================
+   HEADER NAV
+   - Dropdowns open on hover (desktop, via CSS) or on click/tap (everywhere, via this script)
+   - Hamburger "Menu" button shows/hides the whole nav on tablets & phones
+   - Anything open closes when you click outside it or press Escape
+   ========================================================= */
+(function(){
+  const nav = document.getElementById('primary-nav');
+  const navToggle = document.querySelector('.nav-toggle');
+  const dropdowns = document.querySelectorAll('.has-dropdown');
+
+  function closeDropdowns(except){
+    dropdowns.forEach(dd => {
+      if (dd === except) return;
+      dd.classList.remove('open');
+      dd.querySelector('.nav-link').setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function closeMobileMenu(){
+    nav.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  }
+
+  // Click a dropdown's button: toggle that one, close the others
+  dropdowns.forEach(dd => {
+    const btn = dd.querySelector('.nav-link');
+    btn.addEventListener('click', () => {
+      const isOpen = dd.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+      closeDropdowns(dd);
+    });
+  });
+
+  // Hamburger button (tablets & phones)
+  navToggle.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+    if (!isOpen) closeDropdowns();
+  });
+
+  // Picking any link inside the nav closes the menus
+  nav.addEventListener('click', e => {
+    if (e.target.closest('a') || e.target.closest('[data-open-video]')) {
+      closeDropdowns();
+      closeMobileMenu();
+    }
+  });
+
+  // Click outside the header: close everything
+  document.addEventListener('click', e => {
+    if (!e.target.closest('header')) {
+      closeDropdowns();
+      closeMobileMenu();
+    } else if (!e.target.closest('.has-dropdown')) {
+      closeDropdowns();
+    }
+  });
+
+  // Escape key: close everything
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeDropdowns();
+      closeMobileMenu();
+    }
+  });
+
+  // People who turn on "reduce motion" in their OS get a still logo instead of the loop
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const badge = document.querySelector('.badge-video');
+    if (badge) { badge.removeAttribute('autoplay'); badge.pause(); }
+  }
+})();
+</script>
 
 </body>
 </html>
