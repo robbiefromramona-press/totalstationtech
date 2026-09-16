@@ -269,6 +269,21 @@
   .games-section .card{border-color:var(--yellow-dim);padding:30px;}
   .games-section .card h3{font-size:1.35rem;font-family:'Oswald',system-ui,sans-serif;text-transform:uppercase;letter-spacing:0.04em;}
 
+  /* Promo video popup (uses the browser's built-in <dialog>) */
+  .video-modal{
+    border:0;padding:0;background:transparent;width:min(960px, calc(100vw - 32px));max-width:none;
+    color:var(--white);
+  }
+  .video-modal::backdrop{background:rgba(0,0,0,0.85);}
+  .video-modal-inner{position:relative;background:var(--black);border:1px solid var(--yellow-dim);border-radius:var(--radius);overflow:hidden;}
+  .video-modal video{width:100%;height:auto;max-height:80vh;background:#000;}
+  .video-close{
+    position:absolute;top:10px;right:10px;z-index:2;width:38px;height:38px;border-radius:50%;
+    border:1px solid var(--charcoal-2);background:rgba(12,12,13,0.85);color:var(--white);
+    font-size:22px;line-height:1;cursor:pointer;
+  }
+  .video-close:hover{color:var(--yellow);border-color:var(--yellow);}
+
   /* Coaching list */
   .coach-wrap{display:grid;grid-template-columns:1.1fr 0.9fr;gap:50px;align-items:start;}
   @media (max-width:860px){.coach-wrap{grid-template-columns:1fr;}}
@@ -697,6 +712,17 @@
   </div>
 </footer>
 
+<!-- ===== PROMO VIDEO POPUP (opened by the "Videos" nav item) ===== -->
+<dialog class="video-modal" id="video-modal" aria-label="TotalStationTech promo video">
+  <div class="video-modal-inner">
+    <button type="button" class="video-close" aria-label="Close video">&times;</button>
+    <!-- No autoplay on purpose: it has sound, so the viewer presses play -->
+    <video controls playsinline preload="none" poster="assets/video/tst-ad-poster.jpg">
+      <source src="assets/video/tst-ad-video.mp4" type="video/mp4">
+    </video>
+  </div>
+</dialog>
+
 <script>
 /* =========================================================
    HEADER NAV
@@ -887,6 +913,35 @@
   document.addEventListener('click', e => {
     if (!e.target.closest('.site-search')) hide();
   });
+})();
+
+/* =========================================================
+   PROMO VIDEO POPUP
+   Opens from any element with data-open-video (the "Videos" nav item).
+   Closes with the X button, Escape (built into <dialog>), or a click
+   on the dark area around the video. Closing pauses the video.
+   ========================================================= */
+(function(){
+  const modal = document.getElementById('video-modal');
+  const video = modal.querySelector('video');
+
+  function openVideo(){
+    if (!modal.open) modal.showModal();
+  }
+  window.tstOpenVideo = openVideo;
+
+  document.querySelectorAll('[data-open-video]').forEach(el => {
+    el.addEventListener('click', openVideo);
+  });
+
+  modal.querySelector('.video-close').addEventListener('click', () => modal.close());
+
+  // A click that lands on the <dialog> itself (not the video box inside) is the dark backdrop
+  modal.addEventListener('click', e => {
+    if (e.target === modal) modal.close();
+  });
+
+  modal.addEventListener('close', () => video.pause());
 })();
 </script>
 
