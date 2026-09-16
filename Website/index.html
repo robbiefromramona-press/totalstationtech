@@ -259,6 +259,16 @@
   .card p{margin:0;color:var(--gray);font-size:0.9rem;flex-grow:1;}
   .card .btn{align-self:flex-start;margin-top:4px;}
 
+  /* Games & Training: a hazard stripe on top sets it apart from Apps.
+     Grid fills the row with however many games exist (2 now, 3 across max as more are added). */
+  .games-section{position:relative;background:radial-gradient(ellipse at 90% 0%, rgba(245,197,24,0.08), transparent 55%), var(--black);}
+  .games-section::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--stripe);opacity:0.7;}
+  .grid-games{grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));}
+  @media (min-width:1000px){.grid-games{grid-template-columns:repeat(auto-fit, minmax(340px, 1fr));}}
+  @media (max-width:620px){.grid-games{grid-template-columns:1fr;}}
+  .games-section .card{border-color:var(--yellow-dim);padding:30px;}
+  .games-section .card h3{font-size:1.35rem;font-family:'Oswald',system-ui,sans-serif;text-transform:uppercase;letter-spacing:0.04em;}
+
   /* Coaching list */
   .coach-wrap{display:grid;grid-template-columns:1.1fr 0.9fr;gap:50px;align-items:start;}
   @media (max-width:860px){.coach-wrap{grid-template-columns:1fr;}}
@@ -470,6 +480,35 @@
           <h3>CSV Converter</h3>
           <p>Upload a Trimble, Leica, Topcon or Sokkia point export, answer a few quick questions, and download a converted CSV ready for the field.</p>
           <a href="https://press-csv-converter.netlify.app" target="_blank" rel="noopener" class="btn btn-primary">Launch App</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GAMES & TRAINING ===== -->
+  <section id="games" class="games-section">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Games &amp; Training</div>
+        <h2>Practice on your own time. No jobsite required.</h2>
+        <p>Simulators built to make you faster and more confident before you're out in the field.</p>
+      </div>
+      <!-- To add a game: copy one card below and change the name, text, and link -->
+      <div class="grid grid-games">
+
+        <div class="card">
+          <span class="tag tag-live">Live</span>
+          <h3>Stake-Out</h3>
+          <p>Practice. Improve. Get faster. A fun way to master layout.</p>
+          <a href="https://stake-out.netlify.app/" target="_blank" rel="noopener" class="btn btn-primary">Play Now</a>
+        </div>
+
+        <div class="card">
+          <span class="tag tag-live">Live</span>
+          <h3>TriBrach</h3>
+          <p>Learn. Level. Master. The ultimate tribrach simulator.</p>
+          <a href="https://tribrachgame.netlify.app/" target="_blank" rel="noopener" class="btn btn-primary">Play Now</a>
         </div>
 
       </div>
