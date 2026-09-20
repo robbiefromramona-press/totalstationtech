@@ -1,0 +1,65 @@
+/* Shared look for the legal pages (terms.html, privacy.html, disclaimer.html).
+   Same colors and fonts as the homepage. */
+:root{
+  --black:#0c0c0d;
+  --charcoal:#18181a;
+  --charcoal-2:#212124;
+  --yellow:#f5c518;
+  --white:#f4f4f0;
+  --gray:#9c9c94;
+  --gray-dim:#6b6b66;
+  --head:'Oswald', system-ui, sans-serif;
+  --body:'Inter', system-ui, sans-serif;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{background:var(--black); color:var(--white); font-family:var(--body); line-height:1.65;}
+a{color:var(--yellow);}
+a:focus-visible{outline:3px solid var(--yellow); outline-offset:2px;}
+
+.legal-header{
+  position:sticky; top:0; z-index:10;
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:14px clamp(16px, 4vw, 48px);
+  background:rgba(12,12,13,0.96); border-bottom:1px solid var(--charcoal-2);
+}
+.legal-header .logo{
+  display:flex; align-items:center; gap:10px;
+  font-family:var(--head); font-weight:700; font-size:1.4rem; letter-spacing:0.04em;
+  text-transform:uppercase; color:var(--white); text-decoration:none;
+}
+.legal-header .logo svg{width:30px; height:33px; color:var(--yellow); flex:none;}
+.legal-header .logo span{color:var(--yellow);}
+.legal-header .back{
+  font-family:var(--head); font-weight:600; letter-spacing:0.05em;
+  text-transform:uppercase; text-decoration:none; font-size:0.85rem;
+}
+
+main{max-width:780px; margin:0 auto; padding:48px clamp(16px, 4vw, 32px) 64px;}
+h1{font-family:var(--head); font-weight:700; font-size:clamp(2.2rem, 5vw, 3rem); text-transform:uppercase; letter-spacing:0.04em; line-height:1.05;}
+.updated{color:var(--gray); font-size:0.9rem; margin:10px 0 28px; padding-bottom:22px; border-bottom:1px solid var(--charcoal-2);}
+h2{font-family:var(--head); font-weight:600; font-size:1.3rem; text-transform:uppercase; letter-spacing:0.04em; margin:30px 0 8px; color:var(--yellow);}
+p, li{color:#dcdcd6; font-size:1rem;}
+p + p{margin-top:12px;}
+ul{margin:8px 0 0 22px;}
+li + li{margin-top:6px;}
+strong{color:var(--white);}
+
+.legal-footer{
+  display:flex; flex-wrap:wrap; justify-content:center; gap:8px 22px;
+  padding:20px 16px 26px; border-top:1px solid rgba(245,197,24,0.35);
+  color:var(--gray-dim); font-size:0.85rem;
+}
+.legal-footer a{color:var(--gray-dim); text-decoration:none;}
+.legal-footer a:hover, .legal-footer a[aria-current="page"]{color:var(--yellow);}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important; transition:none !important;}
+}
+
+/* Phones: keep the header on one line instead of wrapping "Back to home". */
+@media (max-width: 480px){
+  .legal-header{padding:12px 16px;}
+  .legal-header .logo{font-size:1.15rem; gap:8px;}
+  .legal-header .logo svg{width:26px; height:29px;}
+  .legal-header .back{font-size:0.75rem; white-space:nowrap;}
+}
