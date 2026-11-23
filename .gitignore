@@ -3,3 +3,8 @@
 .env.*
 !.env.example
 _private/
+
+# Added by repo audit 2026-11-23
+concept-reference/
+.dev.vars
+.dev.vars.*
